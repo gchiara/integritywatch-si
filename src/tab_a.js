@@ -34,7 +34,31 @@ var vuedata = {
   travelFilter: 'all',
   charts: {
     institutionType: {
-      title: 'Title',
+      title: 'Lobiranje kontaktov s strani institu-cij',
+      info: ''
+    },
+    topLobbyists: {
+      title: 'Top 10 lobistov',
+      info: ''
+    },
+    lobbyistCategory: {
+      title: 'Kategorija lobistične organizacije',
+      info: ''
+    },
+    institutionTypeRow: {
+      title: 'Lobiranje kontaktov s strani institucij',
+      info: ''
+    },
+    officialType: {
+      title: 'Število kontaktov za lobiranje po vrstah javnih uslužbencev',
+      info: ''
+    },
+    purposeType: {
+      title: 'Število stikov za lobiranje po namenu srečanja',
+      info: ''
+    },
+    contactType: {
+      title: 'Vrsta lobistične dejavnosti',
       info: ''
     },
     mainTable: {
@@ -44,11 +68,56 @@ var vuedata = {
       info: ''
     }
   },
+  executiveCategories: {
+    "Generalni Sekretariat Vlade Republike Slovenije": "Genralni Sekretariat",
+    "Kabinet Predsednika Vlade Republike Slovenije": "Kabinet Predsednika",
+    "Ministrstvo Za Delo, Družino, Socialne Zadeve In Enake Možnosti": "Ministrva",
+    "Ministrstvo Za Finance": "Ministrva",
+    "Ministrstvo Za Gospodarski Razvoj In Tehnologijo": "Ministrva",
+    "Ministrstvo Za Infrastrukturo": "Ministrva",
+    "Ministrstvo Za Izobraževanje, Znanost In Šport": "Ministrva",
+    "Ministrstvo Za Javno Upravo": "Ministrva",
+    "Ministrstvo Za Kmetijstvo, Gozdarstvo In Prehrano": "Ministrva",
+    "Ministrstvo Za Kulturo": "Ministrva",
+    "Ministrstvo Za Notranje Zadeve": "Ministrva",
+    "Ministrstvo Za Okolje In Prostor": "Ministrva",
+    "Ministrstvo Za Pravosodje": "Ministrva",
+    "Ministrstvo Za Zunanje Zadeve": "Ministrva"
+  },
   institutionEntries: {},
+  orgEntries: {},
   selectedElement: { "P": "", "Sub": ""},
   modalShowTable: '',
   colors: {
-    generic: ["#3b95d0", "#4081ae", "#406a95", "#395a75" ]
+    generic: ["#3b95d0", "#4081ae", "#406a95", "#395a75" ],
+    default1: "#2b90b8",
+    institutionsTypes: {
+      "Ministrva": "#0d506b",
+      "Kabinet Predsednika": "#1d7598",
+      "Genralni Sekretariat": "#2b90b8"
+    },
+    function: {
+      "Javni uslužbenec": "#0d506b",
+      "Funkcionar": "#1d7598"
+    },
+    default2: "#449188",
+    lobbyistType: {
+      "Lobist je izvoljeni predstavnik interesne organizacije za katero lobira": "#449188",
+      "Lobist je vpisan v register lobistov v RS": "#41ab9f",
+      "Lobist je zakoniti zastopnik interesne organizacije za katero lobira": "#39c0b0",
+      "Lobist lobira za interesno organizacijo v kateri je zaposlen": "#30cfbd",
+    },
+    contactType: {
+      "OSEBNO": "#449188",
+      "PO E-POŠTI": "#41ab9f",
+      "PO POŠTI": "#39c0b0",
+      "PO TELEFONU": "#30cfbd",
+      "DRUGO": "#63eddd",
+    },
+    purpose: {
+      "Vpliv na sprejem predpisov in drugih splošnih aktov": "#449188",
+      "vpliv na odločanje v drugih zadevah": "#39c0b0"
+    }
   }
 }
 
@@ -64,6 +133,9 @@ new Vue({
   data: vuedata,
   methods: {
     //Share
+    downloadDataset: function () {
+      window.open('./data/tab_a/executive.csv');
+    },
     share: function (platform) {
       if(platform == 'twitter'){
         var thisPage = window.location.href.split('?')[0];
@@ -73,7 +145,7 @@ new Vue({
         return;
       }
       if(platform == 'facebook'){
-        var toShareUrl = 'https://integritywatch.nl';
+        var toShareUrl = 'https://integritywatch.si';
         var shareURL = 'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(toShareUrl);
         window.open(shareURL, '_blank', 'toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250,top=300,left=300');
         return;
@@ -93,6 +165,36 @@ var charts = {
     chart: dc.pieChart("#institutiontype_chart"),
     type: 'pie',
     divId: 'institutiontype_chart'
+  },
+  topLobbyists: {
+    chart: dc.rowChart("#toplobbyists_chart"),
+    type: 'row',
+    divId: 'toplobbyists_chart'
+  },
+  lobbyistCategory: {
+    chart: dc.pieChart("#lobbyistcategory_chart"),
+    type: 'pie',
+    divId: 'lobbyistcategory_chart'
+  },
+  institutionTypeRow: {
+    chart: dc.rowChart("#institutiontyperow_chart"),
+    type: 'row',
+    divId: 'institutiontyperow_chart'
+  },
+  officialType: {
+    chart: dc.pieChart("#officialtype_chart"),
+    type: 'pie',
+    divId: 'officialtype_chart'
+  },
+  purposeType: {
+    chart: dc.pieChart("#purposetype_chart"),
+    type: 'pie',
+    divId: 'purposetype_chart'
+  },
+  contactType: {
+    chart: dc.pieChart("#contacttype_chart"),
+    type: 'pie',
+    divId: 'contacttype_chart'
   },
   mainTable: {
     chart: null,
@@ -167,7 +269,13 @@ var resizeGraphs = function() {
         .cy(sizes.cy)
         .innerRadius(sizes.innerRadius)
         .radius(sizes.radius)
-        .legend(dc.legend().x(0).y(sizes.legendY).gap(10));
+        .legend(dc.legend().x(0).y(sizes.legendY).gap(10).legendText(function(d) { 
+          var thisKey = d.name;
+          if(thisKey.length > charsLength){
+            return thisKey.substring(0, charsLength) + '...';
+          }
+          return thisKey;
+        }));
       charts[c].chart.redraw();
     } else if(charts[c].type == 'cloud') {
       charts[c].chart.size(recalcWidthWordcloud());
@@ -200,17 +308,44 @@ jQuery.extend( jQuery.fn.dataTableExt.oSort, {
   }
 });
 
+//Generate random parameter for dynamic dataset loading (to avoid caching)
+var randomPar = '';
+var randomCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+for ( var i = 0; i < 5; i++ ) {
+  randomPar += randomCharacters.charAt(Math.floor(Math.random() * randomCharacters.length));
+}
 //Load data and generate charts
-csv('./data/tab_a/executive.csv', (err, contacts) => {
+var lobbyist_typeList = {}
+csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
   //Loop through data to aply fixes and calculations
   _.each(contacts, function (d) {
+    //Count entries per insitution
     if(vuedata.institutionEntries[d.institution]) {
       vuedata.institutionEntries[d.institution] ++;
     } else {
       vuedata.institutionEntries[d.institution] = 1;
     }
+    //Count entries per organization
+    if(vuedata.orgEntries[d.org_name]) {
+      vuedata.orgEntries[d.org_name] ++;
+    } else {
+      vuedata.orgEntries[d.org_name] = 1;
+    }
+    //Streamline executive category
+    d.instituionStreamlined = vuedata.executiveCategories[d.institution];
+    //Split Lobbyist type into array
+    d.lobbyist_type_list = [];
+    _.each(d.lobbyist_type.split(','), function (l) {
+      l = l.trim();
+      d.lobbyist_type_list.push(l);
+      if(lobbyist_typeList[l]) {
+        lobbyist_typeList[l] ++;
+      } else {
+        lobbyist_typeList[l] = 1;
+      }
+    });
   });
-  console.log(vuedata.institutionEntries);
+  console.log(lobbyist_typeList);
 
   //Set dc main vars. The second crossfilter is used to handle the travels stacked bar chart.
   var ndx = crossfilter(contacts);
@@ -223,7 +358,7 @@ csv('./data/tab_a/executive.csv', (err, contacts) => {
   var createInstitutionTypeChart = function() {
     var chart = charts.institutionType.chart;
     var dimension = ndx.dimension(function (d) {
-      return d.institution; 
+      return d.instituionStreamlined; 
     });
     var group = dimension.group().reduceSum(function (d) { return 1; });
     var sizes = calcPieSize(charts.institutionType.divId);
@@ -245,11 +380,234 @@ csv('./data/tab_a/executive.csv', (err, contacts) => {
         return thisKey + ': ' + d.value;
       })
       .dimension(dimension)
-      /*
       .colorCalculator(function(d, i) {
-        return vuedata.colors.ricevente[d.key];
+        return vuedata.colors.institutionsTypes[d.key];
       })
-      */
+      .group(group);
+
+    chart.render();
+  }
+
+  //CHART 2
+  var createOfficialTypeChart = function() {
+    var chart = charts.officialType.chart;
+    var dimension = ndx.dimension(function (d) {
+      return d.function; 
+    });
+    var group = dimension.group().reduceSum(function (d) { return 1; });
+    var sizes = calcPieSize(charts.officialType.divId);
+    chart
+      .width(sizes.width)
+      .height(sizes.height)
+      .cy(sizes.cy)
+      .innerRadius(sizes.innerRadius)
+      .radius(sizes.radius)
+      .legend(dc.legend().x(0).y(sizes.legendY).gap(10).legendText(function(d) { 
+        var thisKey = d.name;
+        if(thisKey.length > 40){
+          return thisKey.substring(0,40) + '...';
+        }
+        return thisKey;
+      }))
+      .title(function(d){
+        var thisKey = d.key;
+        return thisKey + ': ' + d.value;
+      })
+      .dimension(dimension)
+      .colorCalculator(function(d, i) {
+        return vuedata.colors.function[d.key];
+      })
+      .group(group);
+
+    chart.render();
+  }
+
+  //CHART 3
+  var createTopLobbyistsChart = function() {
+    function getLobbyistType(org) {
+      var c = _.find(contacts, function (x) { return x.org_name == org });
+      if(c) {
+        return c.lobbyist_type.split(',')[0];
+      }
+      return ""; 
+    }
+    var chart = charts.topLobbyists.chart;
+    var dimension = ndx.dimension(function (d) {
+      return d.org_name;
+    });
+    var group = dimension.group().reduceSum(function (d) {
+        return 1;
+    });
+    var filteredGroup = (function(source_group) {
+      return {
+        all: function() {
+          return source_group.top(10).filter(function(d) {
+            return (d.value != 0);
+          });
+        }
+      };
+    })(group);
+    var width = recalcWidth(charts.topLobbyists.divId);
+    var charsLength = recalcCharsLength(width);
+    
+    chart
+      .width(width)
+      .height(500)
+      .margins({top: 0, left: 0, right: 0, bottom: 20})
+      .group(filteredGroup)
+      .dimension(dimension)
+      .colorCalculator(function(d, i) {
+        var type = getLobbyistType(d.key);
+        return vuedata.colors.lobbyistType[type];
+      })
+      .label(function (d) {
+          if(d.key && d.key.length > charsLength){
+            return d.key.substring(0,charsLength) + '...';
+          }
+          return d.key;
+      })
+      .title(function (d) {
+          return d.key + ': ' + d.value;
+      })
+      .elasticX(true)
+      .xAxis().ticks(4);
+      //chart.xAxis().tickFormat(numberFormat);
+      chart.render();
+  }
+
+  //CHART 4
+  var createLobbyistCategoryChart = function() {
+    var chart = charts.lobbyistCategory.chart;
+    var dimension = ndx.dimension(function (d) {
+      return d.lobbyist_type_list; 
+    }, true);
+    var group = dimension.group().reduceSum(function (d) { return 1; });
+    var sizes = calcPieSize(charts.lobbyistCategory.divId);
+    chart
+      .width(sizes.width)
+      .height(sizes.height)
+      .cy(sizes.cy)
+      .innerRadius(sizes.innerRadius)
+      .radius(sizes.radius)
+      .cap(5)
+      .legend(dc.legend().x(0).y(sizes.legendY).gap(10).legendText(function(d) { 
+        var thisKey = d.name;
+        if(thisKey.length > 40){
+          return thisKey.substring(0,40) + '...';
+        }
+        return thisKey;
+      }))
+      .title(function(d){
+        var thisKey = d.key;
+        return thisKey + ': ' + d.value;
+      })
+      .dimension(dimension)
+      .colorCalculator(function(d, i) {
+        return vuedata.colors.lobbyistType[d.key];
+      })
+      .group(group);
+
+    chart.render();
+  }
+
+  //CHART 5
+  var createInstitutionTypeRowChart = function() {
+    var chart = charts.institutionTypeRow.chart;
+    var dimension = ndx.dimension(function (d) {
+      return d.institution;
+    });
+    var group = dimension.group().reduceSum(function (d) {
+        return 1;
+    });
+    var width = recalcWidth(charts.institutionTypeRow.divId);
+    var charsLength = recalcCharsLength(width);
+    chart
+      .width(width)
+      .height(500)
+      .margins({top: 0, left: 0, right: 0, bottom: 20})
+      .group(group)
+      .dimension(dimension)
+      .colorCalculator(function(d, i) {
+        return vuedata.colors.default1;
+      })
+      .label(function (d) {
+          if(d.key && d.key.length > charsLength){
+            return d.key.substring(0,charsLength) + '...';
+          }
+          return d.key;
+      })
+      .title(function (d) {
+          return d.key + ': ' + d.value;
+      })
+      .elasticX(true)
+      .xAxis().ticks(4);
+      //chart.xAxis().tickFormat(numberFormat);
+      chart.render();
+  }
+
+  //CHART 6
+  var createPurposeTypeChart = function() {
+    var chart = charts.purposeType.chart;
+    var dimension = ndx.dimension(function (d) {
+      return d.purpose; 
+    });
+    var group = dimension.group().reduceSum(function (d) { return 1; });
+    var sizes = calcPieSize(charts.purposeType.divId);
+    chart
+      .width(sizes.width)
+      .height(sizes.height)
+      .cy(sizes.cy)
+      .innerRadius(sizes.innerRadius)
+      .radius(sizes.radius)
+      .legend(dc.legend().x(0).y(sizes.legendY).gap(10).legendText(function(d) { 
+        var thisKey = d.name;
+        if(thisKey.length > 40){
+          return thisKey.substring(0,40) + '...';
+        }
+        return thisKey;
+      }))
+      .title(function(d){
+        var thisKey = d.key;
+        return thisKey + ': ' + d.value;
+      })
+      .dimension(dimension)
+      .colorCalculator(function(d, i) {
+        return vuedata.colors.purpose[d.key];
+      })
+      .group(group);
+
+    chart.render();
+  }
+
+  //CHART 7
+  var createContactTypeChart = function() {
+    var chart = charts.contactType.chart;
+    var dimension = ndx.dimension(function (d) {
+      return d.contact_type; 
+    });
+    var group = dimension.group().reduceSum(function (d) { return 1; });
+    var sizes = calcPieSize(charts.contactType.divId);
+    chart
+      .width(sizes.width)
+      .height(sizes.height)
+      .cy(sizes.cy)
+      .innerRadius(sizes.innerRadius)
+      .radius(sizes.radius)
+      .legend(dc.legend().x(0).y(sizes.legendY).gap(10).legendText(function(d) { 
+        var thisKey = d.name;
+        if(thisKey.length > 40){
+          return thisKey.substring(0,40) + '...';
+        }
+        return thisKey;
+      }))
+      .title(function(d){
+        var thisKey = d.key;
+        return thisKey + ': ' + d.value;
+      })
+      .dimension(dimension)
+      .colorCalculator(function(d, i) {
+        return vuedata.colors.contactType[d.key];
+      })
       .group(group);
 
     chart.render();
@@ -413,6 +771,12 @@ csv('./data/tab_a/executive.csv', (err, contacts) => {
   
   //Render charts
   createInstitutionTypeChart();
+  createTopLobbyistsChart();
+  createLobbyistCategoryChart();
+  createInstitutionTypeRowChart();
+  createOfficialTypeChart();
+  createPurposeTypeChart();
+  createContactTypeChart();
   createTable();
 
   $('.dataTables_wrapper').append($('.dataTables_length'));

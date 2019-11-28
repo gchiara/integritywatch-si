@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet">
-    <link rel="stylesheet" href="static/meps.css">
+    <link rel="stylesheet" href="static/tab_a.css">
 </head>
 <body>
     <div id="app" class="tabA">   
@@ -23,17 +23,9 @@
               <!-- INFO -->
               <div class="col-md-8 chart-col" v-if="showInfo">
                 <div class="boxed-container description-container">
-                  <h1>Integrity Watch Slovenia</h1>
+                  <h1>Integrity Watch Slovenija– Vladni lobiranje</h1>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nec quam fringilla, mollis lectus in, tincidunt turpis. Mauris nec nunc non urna tempor luctus dignissim eu massa.</p> 
                   <i class="material-icons close-btn" @click="showInfo = false">close</i>
-                </div>
-              </div>
-              <!-- SHARE -->
-              <div class="col-md-4 chart-col" v-if="showShare">
-                <div class="boxed-container share-container">
-                  <button class="twitter-btn" @click="share('twitter')">Share on Twitter</button>
-                  <button class="facebook-btn" @click="share('facebook')">Share on Facebook</button>
-                  <i class="material-icons close-btn" @click="showShare = false">close</i>
                 </div>
               </div>
             </div>
@@ -45,12 +37,23 @@
                 <div class="subrow-title">VLADNA INSTITUCIJA</div>
               </div>
               <div class="col-md-6 chart-col">
-                <div class="boxed-container chart-container donazioni_1">
+                <div class="boxed-container chart-container tab_a_1">
                   <chart-header :title="charts.institutionType.title" :info="charts.institutionType.info" ></chart-header>
                   <div class="chart-inner" id="institutiontype_chart"></div>
                 </div>
               </div>
-
+              <div class="col-md-6 chart-col">
+                <div class="boxed-container chart-container tab_a_2">
+                  <chart-header :title="charts.officialType.title" :info="charts.officialType.info" ></chart-header>
+                  <div class="chart-inner" id="officialtype_chart"></div>
+                </div>
+              </div>
+              <div class="col-md-12 chart-col">
+                <div class="boxed-container chart-container tab_a_3">
+                  <chart-header :title="charts.institutionTypeRow.title" :info="charts.institutionTypeRow.info" ></chart-header>
+                  <div class="chart-inner" id="institutiontyperow_chart"></div>
+                </div>
+              </div>
             </div>
           </div>
           <!-- CHARTS - FIRST ROW - RIGHT -->
@@ -59,7 +62,30 @@
               <div class="col-md-12 subrow-title-container subrow-title-container-right">
                 <div class="subrow-title subrow-title-right">LOBISTI</div>
               </div>
-
+              <div class="col-md-6 chart-col">
+                <div class="boxed-container chart-container tab_a_4">
+                  <chart-header :title="charts.topLobbyists.title" :info="charts.topLobbyists.info" ></chart-header>
+                  <div class="chart-inner" id="toplobbyists_chart"></div>
+                </div>
+              </div>
+              <div class="col-md-6 chart-col">
+                <div class="boxed-container chart-container tab_a_5">
+                  <chart-header :title="charts.lobbyistCategory.title" :info="charts.lobbyistCategory.info" ></chart-header>
+                  <div class="chart-inner" id="lobbyistcategory_chart"></div>
+                </div>
+              </div>
+              <div class="col-md-6 chart-col">
+                <div class="boxed-container chart-container tab_a_6">
+                  <chart-header :title="charts.purposeType.title" :info="charts.purposeType.info" ></chart-header>
+                  <div class="chart-inner" id="purposetype_chart"></div>
+                </div>
+              </div>
+              <div class="col-md-6 chart-col">
+                <div class="boxed-container chart-container tab_a_7">
+                  <chart-header :title="charts.contactType.title" :info="charts.contactType.info" ></chart-header>
+                  <div class="chart-inner" id="contacttype_chart"></div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -110,10 +136,10 @@
                   </div>
                   <div class="col-md-6 details-right">
                     <div class="details-title details-title-right">LOBIST</div>
-                    <div class="details-line"><span class="details-line-title">Organizacija:</span> {{ selectedElement.contact_type }}</div>
-                    <div class="details-line"><span class="details-line-title">Statusi lobista:</span> {{ selectedElement.org_name }}</div>
-                    <div class="details-line"><span class="details-line-title">Namen in cilj lobirankja:</span> {{ selectedElement.lobbyist_type }}</div>
-                    <div class="details-line"><span class="details-line-title">Skupno število lobističnih stikov:</span> {{ selectedElement.donation_year }}</div>
+                    <div class="details-line"><span class="details-line-title">Organizacija:</span> {{ selectedElement.org_name }}</div>
+                    <div class="details-line"><span class="details-line-title">Statusi lobista:</span> {{ selectedElement.lobbyist_type }}</div>
+                    <div class="details-line"><span class="details-line-title">Namen in cilj lobirankja:</span> {{ selectedElement.purpose }}</div>
+                    <div class="details-line"><span class="details-line-title">Skupno število lobističnih stikov:</span> {{ orgEntries[selectedElement.org_name] }}</div>
                     <div class="details-line" v-if="selectedElement.purpose && selectedElement.purpose.length > 0"><span class="details-line-title">Dodatne informacije o namenu srečanja lobiranja:</span> {{ selectedElement.purpose }} </div>
                     <div class="details-line" v-else><span class="details-line-title">Dodatne informacije o namenu srečanja lobiranja:</span> Dodatne informacije niso na voljo</div>
                   </div>
@@ -126,13 +152,7 @@
       <!-- Bottom bar -->
       <div class="container-fluid footer-bar">
         <div class="row">
-          <div class="footer-col col-8 col-sm-4">
-            <div class="footer-input">
-              <input type="text" id="search-input" placeholder="Filter per lid of partij">
-              <i class="material-icons">search</i>
-            </div>
-          </div>
-          <div class="footer-col col-4 col-sm-8 footer-counts">
+          <div class="footer-col col-12 col-sm-12 footer-counts">
             <div class="dc-data-count count-box">
               <div class="filter-count">0</div>od <strong class="total-count">0</strong> stikov
             </div>
@@ -142,10 +162,19 @@
             <div class="count-box count-box-lobbyists">
               <div class="filter-count nblobbyists">0</div>od <strong class="total-count">0</strong> lobistu
             </div>
+            <div class="footer-input">
+              <input type="text" id="search-input" placeholder="Filter per lid of partij">
+              <i class="material-icons">search</i>
+            </div>
           </div>
         </div>
         <!-- Reset filters -->
         <button class="reset-btn"><i class="material-icons">settings_backup_restore</i><span class="reset-btn-text">Reset filters</span></button>
+        <div class="footer-buttons-right">
+          <button @click="downloadDataset"><i class="material-icons">cloud_download</i></button>
+          <button class="btn-twitter" @click="share('twitter')"><img src="./images/twitter.png" /></button>
+          <button class="btn-fb" @click="share('facebook')"><img src="./images/facebook.png" /></button>
+        </div>
       </div>
       <!-- Loader -->
       <loader v-if="loader" :text="'Loading ...'" />
@@ -156,7 +185,7 @@
     <script type="text/javascript" src="vendor/js/crossfilter.min.js"></script>
     <script type="text/javascript" src="vendor/js/dc.js"></script>
     <script type="text/javascript" src="vendor/js/dc.cloud.js"></script>
-    <script src="static/meps.js"></script>
+    <script src="static/tab_a.js"></script>
 
  
 </body>

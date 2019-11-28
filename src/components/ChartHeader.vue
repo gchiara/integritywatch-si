@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$color_TI: #3b95d0;
+$color_TI: #0d506b;
 $color_TI_darker: darken( $color_TI, 20% );
 .chart-header {
   padding: 10px 5px;
