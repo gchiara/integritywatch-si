@@ -23,8 +23,9 @@
               <!-- INFO -->
               <div class="col-md-8 chart-col" v-if="showInfo">
                 <div class="boxed-container description-container">
-                  <h1>Integrity Watch Slovenija– Vladni lobiranje</h1>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nec quam fringilla, mollis lectus in, tincidunt turpis. Mauris nec nunc non urna tempor luctus dignissim eu massa.</p> 
+                  <h1>Integrity Watch Slovenia – Lobistični stiki</h1>
+                  <p>To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled lobističnih stikov v Državnem zboru, Državnem svetu, Kabinetu predsednika Vlade Republike Slovenije, Generalnemu sekretariatu Vlade Republike Slovenije ter vseh ministrstvih, vključno s Službo Vlade Republike Slovenije za razvoj in evropsko kohezijsko politiko in Uradom vlade za Slovence v zamejstvu in po svetu od 22. junija 2018. <a href="#" @click="readMore = true">Preberi več</a>.</p>
+                  <p v-show="readMore">S preprostim klikom na grafe ali sezname spodaj lahko uporabniki razvrščajo in filtrirajo podatke o lobistničh stikih.</p>  
                   <i class="material-icons close-btn" @click="showInfo = false">close</i>
                 </div>
               </div>
@@ -34,7 +35,7 @@
           <div class="col-md-6 chart-subrow">
             <div class="row chart-subrow-row">
               <div class="col-md-12 subrow-title-container">
-                <div class="subrow-title">VLADNA INSTITUCIJA</div>
+                <div class="subrow-title">DRŽAVNE USTANOVE</div>
               </div>
               <div class="col-md-6 chart-col">
                 <div class="boxed-container chart-container tab_a_1">
@@ -163,13 +164,13 @@
               <div class="filter-count nblobbyists">0</div>od <strong class="total-count">0</strong> lobistu
             </div>
             <div class="footer-input">
-              <input type="text" id="search-input" placeholder="Filter per lid of partij">
+              <input type="text" id="search-input" placeholder="Iskanje">
               <i class="material-icons">search</i>
             </div>
           </div>
         </div>
         <!-- Reset filters -->
-        <button class="reset-btn"><i class="material-icons">settings_backup_restore</i><span class="reset-btn-text">Reset filters</span></button>
+        <button class="reset-btn"><i class="material-icons">settings_backup_restore</i><span class="reset-btn-text">Ponastavite</span></button>
         <div class="footer-buttons-right">
           <button @click="downloadDataset"><i class="material-icons">cloud_download</i></button>
           <button class="btn-twitter" @click="share('twitter')"><img src="./images/twitter.png" /></button>

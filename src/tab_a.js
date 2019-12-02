@@ -27,6 +27,7 @@ import ChartHeader from './components/ChartHeader.vue';
 var vuedata = {
   page: 'tabA',
   loader: true,
+  readMore: false,
   showInfo: true,
   showShare: true,
   showAllCharts: true,
@@ -34,31 +35,31 @@ var vuedata = {
   travelFilter: 'all',
   charts: {
     institutionType: {
-      title: 'Lobiranje kontaktov s strani institu-cij',
+      title: 'Lobistični stiki izvršilne oblasti',
       info: ''
     },
     topLobbyists: {
-      title: 'Top 10 lobistov',
+      title: 'Lobisti – Top 10',
       info: ''
     },
     lobbyistCategory: {
-      title: 'Kategorija lobistične organizacije',
+      title: 'Statusi lobista',
       info: ''
     },
     institutionTypeRow: {
-      title: 'Lobiranje kontaktov s strani institucij',
+      title: 'Statusi lobistaLobistični stiki s strani državnih ustanov izvršilne oblasti',
       info: ''
     },
     officialType: {
-      title: 'Število kontaktov za lobiranje po vrstah javnih uslužbencev',
+      title: 'Funkcija/položaj lobiranca',
       info: ''
     },
     purposeType: {
-      title: 'Število stikov za lobiranje po namenu srečanja',
+      title: 'Število lobističnih stikov po namenu lobiranja',
       info: ''
     },
     contactType: {
-      title: 'Vrsta lobistične dejavnosti',
+      title: 'Način lobiranja',
       info: ''
     },
     mainTable: {
@@ -108,11 +109,11 @@ var vuedata = {
       "Lobist lobira za interesno organizacijo v kateri je zaposlen": "#30cfbd",
     },
     contactType: {
-      "OSEBNO": "#449188",
-      "PO E-POŠTI": "#41ab9f",
-      "PO POŠTI": "#39c0b0",
-      "PO TELEFONU": "#30cfbd",
-      "DRUGO": "#63eddd",
+      "Osebno": "#449188",
+      "Po e-pošti": "#41ab9f",
+      "Po pošti": "#39c0b0",
+      "Po telefonu": "#30cfbd",
+      "Drugo": "#63eddd",
     },
     purpose: {
       "Vpliv na sprejem predpisov in drugih splošnih aktov": "#449188",
@@ -331,6 +332,12 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
     } else {
       vuedata.orgEntries[d.org_name] = 1;
     }
+    //Change caps of contact_type and institution
+    d.contact_type = d.contact_type.toLowerCase();
+    d.contact_type = d.contact_type.charAt(0).toUpperCase() + d.contact_type.slice(1);
+    d.institution_lowerCase = d.institution.toLowerCase();
+    d.institution_lowerCase = d.institution_lowerCase.charAt(0).toUpperCase() + d.institution_lowerCase.slice(1);
+    d.institution_lowerCase = d.institution_lowerCase.replace("republike slovenije", "Republike Slovenije");
     //Streamline executive category
     d.instituionStreamlined = vuedata.executiveCategories[d.institution];
     //Split Lobbyist type into array
@@ -345,7 +352,6 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
       }
     });
   });
-  console.log(lobbyist_typeList);
 
   //Set dc main vars. The second crossfilter is used to handle the travels stacked bar chart.
   var ndx = crossfilter(contacts);
@@ -514,7 +520,7 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
   var createInstitutionTypeRowChart = function() {
     var chart = charts.institutionTypeRow.chart;
     var dimension = ndx.dimension(function (d) {
-      return d.institution;
+      return d.institution_lowerCase;
     });
     var group = dimension.group().reduceSum(function (d) {
         return 1;
@@ -531,10 +537,10 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
         return vuedata.colors.default1;
       })
       .label(function (d) {
-          if(d.key && d.key.length > charsLength){
-            return d.key.substring(0,charsLength) + '...';
-          }
-          return d.key;
+        if(d.key && d.key.length > charsLength){
+          return d.key.substring(0,charsLength) + '...';
+        }
+        return d.key;
       })
       .title(function (d) {
           return d.key + ': ' + d.value;
