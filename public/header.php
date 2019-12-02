@@ -21,7 +21,7 @@
     </ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a href="./about" class="nav-link">O Integrity Watch</a>
+        <a href="./about.php" class="nav-link">O Integrity Watch</a>
       </li>
       <li class="nav-item">
         <i class="material-icons nav-link icon-btn info-btn" @click="showInfo = !showInfo">info</i>

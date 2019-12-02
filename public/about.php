@@ -103,18 +103,16 @@
           <div class="panel panel-default panel-static">
             <div class="panel-heading">
               <h2 class="panel-title">
-                <a href="#">Contact Details</a>
+                <a href="#">Kontakt</a>
               </h2>
             </div>
             <div id="contact" class="panel-collapse">
               <div class="panel-body">
               <p>
                 <strong>Transparency International Slovenia</strong><br /><br />
-                Lorem Ipsum<br />
-                Lorem Ipsum<br />
-                Lorem Ipsum<br />
-                Lorem Ipsum<br /><br />
-                <a href="mailto:lorem@ipsum.sit">lorem@ipsum.sit</a>
+                Vožarski pot 12, 1000 Ljubljana<br /><br />
+                E: <a href="mailto:info@transparency.si">info@transparency.si</a><br />
+                T: 01/ 320 73 25
               </p>
             </div>
             </div>
