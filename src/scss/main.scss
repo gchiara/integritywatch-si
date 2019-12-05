@@ -186,8 +186,44 @@ $color_lobby: #449188;
   &.tab_a_7 {
     height: 520px;
   }
+  &.tab_b_1 {
+    height: 505px;
+  }
+  &.tab_b_2 {
+    height: 470px;
+  }
+  &.tab_b_3 {
+    height: 600px;
+  }
+  &.tab_b_4 {
+    height: 600px;
+  }
+  &.tab_b_5 {
+    height: 470px;
+  }
+  &.tab_b_6 {
+    height: 470px;
+  }
   @media only screen and (max-width: 767px) {
     height: auto !important;
+  }
+}
+.institution-filter-container {
+  padding: 20px;
+  .institution-filter-btn {
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-weight: 400;
+    background: #0d506b;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    &:hover {
+      background: #2d708b;
+    }
+    &.active {
+      background: #2d708b;
+    }
   }
 }
 
