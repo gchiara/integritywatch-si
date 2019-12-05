@@ -760,6 +760,7 @@ csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
     }
     searchDimension.filter(null);
     $('#search-input').val('');
+    vuedata.instFilter = 'all';
     dc.redrawAll();
   }
   $('.reset-btn').click(function(){
