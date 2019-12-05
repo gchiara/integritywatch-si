@@ -134,6 +134,7 @@
                   <div class="col-md-6 details-left">
                     <div class="details-title details-title-left">JAVNI ORGAN</div>
                     <div class="details-line"><span class="details-line-title">Institucija:</span> {{ selectedElement.institution }}</div>
+                    <div class="details-line"><span class="details-line-title">Politična stranka:</span> {{ selectedElement.party }}</div>
                     <div class="details-line"><span class="details-line-title">Funkcija/Položaj Lobiranca:</span> {{ selectedElement.function }}</div>
                     <div class="details-line"><span class="details-line-title">Skupno število lobističnih stikov:</span> {{ institutionEntries[selectedElement.institution] }}</div>
                   </div>
