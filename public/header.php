@@ -11,6 +11,9 @@
       <li class="nav-item">
         <a href="./parlamenta.php" class="nav-link" :class="{active: page == 'tabB'}">Lobiranje parlamenta</a>
       </li>
+      <li class="nav-item">
+        <a href="./limitations.php" class="nav-link" :class="{active: page == 'tabC'}">Evidenca poslovnih</a>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Druge različice

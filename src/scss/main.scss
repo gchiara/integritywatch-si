@@ -204,6 +204,15 @@ $color_lobby: #449188;
   &.tab_b_6 {
     height: 470px;
   }
+  &.tab_c_1 {
+    height: 800px;
+  }
+  &.tab_c_2 {
+    height: 470px;
+  }
+  &.tab_c_3 {
+    height: 470px;
+  }
   @media only screen and (max-width: 767px) {
     height: auto !important;
   }
@@ -792,6 +801,42 @@ table.dataTable tbody tr:hover {
       transition: all .4s;
       &:hover {
         background: #1a6a9e;
+      }
+    }
+  }
+}
+
+/* Mobile tables */
+
+.tabA {
+  .chart-table {
+    td, th {
+      &:nth-child(3), &:nth-child(7), &:nth-child(8) {
+        @media only screen and (max-width: 768px) {
+          display: none;
+        }
+      }
+    }
+  }
+}
+.tabB {
+  .chart-table {
+    td, th {
+      &:nth-child(3), &:nth-child(4), &:nth-child(8), &:nth-child(9) {
+        @media only screen and (max-width: 768px) {
+          display: none;
+        }
+      }
+    }
+  }
+}
+.tabC {
+  .chart-table {
+    td, th {
+      &:nth-child(3), &:nth-child(4), &:nth-child(7) {
+        @media only screen and (max-width: 768px) {
+          display: none;
+        }
       }
     }
   }

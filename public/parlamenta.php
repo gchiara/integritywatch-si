@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="static/tab_b.css">
 </head>
 <body>
-    <div id="app" class="tabA">   
+    <div id="app" class="tabB">   
       <?php include 'header.php' ?>
       <div class="container-fluid dashboard-container-outer">
         <div class="row dashboard-container">

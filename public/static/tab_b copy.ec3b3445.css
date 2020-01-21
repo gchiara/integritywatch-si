@@ -459,15 +459,6 @@ div.dc-html-legend {
 .chart-container.tab_b_6 {
   height: 470px;
 }
-.chart-container.tab_c_1 {
-  height: 800px;
-}
-.chart-container.tab_c_2 {
-  height: 470px;
-}
-.chart-container.tab_c_3 {
-  height: 470px;
-}
 @media only screen and (max-width: 767px) {
   .chart-container {
     height: auto !important;
@@ -1062,25 +1053,6 @@ table.dataTable tbody tr:hover {
 }
 #detailsModal .details-tables-buttons button:hover {
   background: #1a6a9e;
-}
-
-/* Mobile tables */
-@media only screen and (max-width: 768px) {
-  .tabA .chart-table td:nth-child(3), .tabA .chart-table td:nth-child(7), .tabA .chart-table td:nth-child(8), .tabA .chart-table th:nth-child(3), .tabA .chart-table th:nth-child(7), .tabA .chart-table th:nth-child(8) {
-    display: none;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .tabB .chart-table td:nth-child(3), .tabB .chart-table td:nth-child(4), .tabB .chart-table td:nth-child(8), .tabB .chart-table td:nth-child(9), .tabB .chart-table th:nth-child(3), .tabB .chart-table th:nth-child(4), .tabB .chart-table th:nth-child(8), .tabB .chart-table th:nth-child(9) {
-    display: none;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .tabC .chart-table td:nth-child(3), .tabC .chart-table td:nth-child(4), .tabC .chart-table td:nth-child(7), .tabC .chart-table th:nth-child(3), .tabC .chart-table th:nth-child(4), .tabC .chart-table th:nth-child(7) {
-    display: none;
-  }
 }.overlay[data-v-cb0a45] {
   background-color: rgba(255, 255, 255, 0.9);
   z-index: 10001;

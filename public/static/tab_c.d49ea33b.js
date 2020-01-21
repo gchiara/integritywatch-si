@@ -46719,7 +46719,7 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"C:/Users/ElaineG/AppData/Local/Yarn/config/global/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.esm.js"}],"tab_a.js":[function(require,module,exports) {
+},{"_css_loader":"C:/Users/ElaineG/AppData/Local/Yarn/config/global/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.esm.js"}],"tab_c.js":[function(require,module,exports) {
 "use strict";
 
 var _jquery = _interopRequireDefault(require("jquery"));
@@ -46757,19 +46757,15 @@ window.underscore = _underscore.default;
 window._ = _underscore.default;
 // Data object - is also used by Vue
 var vuedata = {
-  page: 'tabA',
+  page: 'tabB',
   loader: true,
   readMore: false,
   showInfo: true,
   showShare: true,
   showAllCharts: true,
   chartMargin: 40,
-  travelFilter: 'all',
+  instFilter: 'all',
   charts: {
-    institutionType: {
-      title: 'Lobistični stiki izvršilne oblasti',
-      info: ''
-    },
     topLobbyists: {
       title: 'Lobisti – Top 10',
       info: ''
@@ -46778,8 +46774,8 @@ var vuedata = {
       title: 'Statusi lobista',
       info: ''
     },
-    institutionTypeRow: {
-      title: 'Statusi lobistaLobistični stiki s strani državnih ustanov izvršilne oblasti',
+    party: {
+      title: 'Lobistični stiki politične stranke',
       info: ''
     },
     officialType: {
@@ -46868,7 +46864,7 @@ new _vue.default({
   methods: {
     //Share
     downloadDataset: function downloadDataset() {
-      window.open('./data/tab_a/executive.csv');
+      window.open('./data/tab_b/parliament.csv');
     },
     share: function share(platform) {
       if (platform == 'twitter') {
@@ -46894,11 +46890,6 @@ $(function () {
 }); //Charts
 
 var charts = {
-  institutionType: {
-    chart: dc.pieChart("#institutiontype_chart"),
-    type: 'pie',
-    divId: 'institutiontype_chart'
-  },
   topLobbyists: {
     chart: dc.rowChart("#toplobbyists_chart"),
     type: 'row',
@@ -46909,10 +46900,10 @@ var charts = {
     type: 'pie',
     divId: 'lobbyistcategory_chart'
   },
-  institutionTypeRow: {
-    chart: dc.rowChart("#institutiontyperow_chart"),
+  party: {
+    chart: dc.rowChart("#party_chart"),
     type: 'row',
-    divId: 'institutiontyperow_chart'
+    divId: 'party_chart'
   },
   officialType: {
     chart: dc.pieChart("#officialtype_chart"),
@@ -47059,7 +47050,7 @@ for (var i = 0; i < 5; i++) {
 
 
 var lobbyist_typeList = {};
-(0, _d3Request.csv)('./data/tab_a/executive.csv?' + randomPar, function (err, contacts) {
+(0, _d3Request.csv)('./data/tab_b/parliament.csv?' + randomPar, function (err, contacts) {
   //Loop through data to aply fixes and calculations
   _.each(contacts, function (d) {
     //Count entries per insitution
@@ -47102,33 +47093,41 @@ var lobbyist_typeList = {};
 
   var ndx = crossfilter(contacts);
   var searchDimension = ndx.dimension(function (d) {
-    var entryString = ' ';
+    var entryString = ' ' + d.institution.toLowerCase();
     return entryString.toLowerCase();
   }); //CHART 1
 
-  var createInstitutionTypeChart = function createInstitutionTypeChart() {
-    var chart = charts.institutionType.chart;
+  var createPartyChart = function createPartyChart() {
+    var chart = charts.party.chart;
     var dimension = ndx.dimension(function (d) {
-      return d.instituionStreamlined;
+      if (d.party.length < 1) {
+        return "Other";
+      }
+
+      return d.party;
     });
     var group = dimension.group().reduceSum(function (d) {
       return 1;
     });
-    var sizes = calcPieSize(charts.institutionType.divId);
-    chart.width(sizes.width).height(sizes.height).cy(sizes.cy).innerRadius(sizes.innerRadius).radius(sizes.radius).legend(dc.legend().x(0).y(sizes.legendY).gap(10).legendText(function (d) {
-      var thisKey = d.name;
-
-      if (thisKey.length > 40) {
-        return thisKey.substring(0, 40) + '...';
+    var width = recalcWidth(charts.party.divId);
+    var charsLength = recalcCharsLength(width);
+    chart.width(width).height(415).margins({
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 20
+    }).group(group).dimension(dimension).colorCalculator(function (d, i) {
+      return vuedata.colors.default1;
+    }).label(function (d) {
+      if (d.key && d.key.length > charsLength) {
+        return d.key.substring(0, charsLength) + '...';
       }
 
-      return thisKey;
-    })).title(function (d) {
-      var thisKey = d.key;
-      return thisKey + ': ' + d.value;
-    }).dimension(dimension).colorCalculator(function (d, i) {
-      return vuedata.colors.institutionsTypes[d.key];
-    }).group(group);
+      return d.key;
+    }).title(function (d) {
+      return d.key + ': ' + d.value;
+    }).elasticX(true).xAxis().ticks(4); //chart.xAxis().tickFormat(numberFormat);
+
     chart.render();
   }; //CHART 2
 
@@ -47193,7 +47192,7 @@ var lobbyist_typeList = {};
 
     var width = recalcWidth(charts.topLobbyists.divId);
     var charsLength = recalcCharsLength(width);
-    chart.width(width).height(500).margins({
+    chart.width(width).height(510).margins({
       top: 0,
       left: 0,
       right: 0,
@@ -47242,37 +47241,6 @@ var lobbyist_typeList = {};
   }; //CHART 5
 
 
-  var createInstitutionTypeRowChart = function createInstitutionTypeRowChart() {
-    var chart = charts.institutionTypeRow.chart;
-    var dimension = ndx.dimension(function (d) {
-      return d.institution_lowerCase;
-    });
-    var group = dimension.group().reduceSum(function (d) {
-      return 1;
-    });
-    var width = recalcWidth(charts.institutionTypeRow.divId);
-    var charsLength = recalcCharsLength(width);
-    chart.width(width).height(500).margins({
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 20
-    }).group(group).dimension(dimension).colorCalculator(function (d, i) {
-      return vuedata.colors.default1;
-    }).label(function (d) {
-      if (d.key && d.key.length > charsLength) {
-        return d.key.substring(0, charsLength) + '...';
-      }
-
-      return d.key;
-    }).title(function (d) {
-      return d.key + ': ' + d.value;
-    }).elasticX(true).xAxis().ticks(4); //chart.xAxis().tickFormat(numberFormat);
-
-    chart.render();
-  }; //CHART 6
-
-
   var createPurposeTypeChart = function createPurposeTypeChart() {
     var chart = charts.purposeType.chart;
     var dimension = ndx.dimension(function (d) {
@@ -47297,7 +47265,7 @@ var lobbyist_typeList = {};
       return vuedata.colors.purpose[d.key];
     }).group(group);
     chart.render();
-  }; //CHART 7
+  }; //CHART 6
 
 
   var createContactTypeChart = function createContactTypeChart() {
@@ -47360,7 +47328,7 @@ var lobbyist_typeList = {};
         "targets": 3,
         "defaultContent": "N/A",
         "data": function data(d) {
-          return d.institution;
+          return d.party;
         }
       }, {
         "searchable": false,
@@ -47368,7 +47336,7 @@ var lobbyist_typeList = {};
         "targets": 4,
         "defaultContent": "N/A",
         "data": function data(d) {
-          return d.date;
+          return d.institution;
         }
       }, {
         "searchable": false,
@@ -47376,7 +47344,7 @@ var lobbyist_typeList = {};
         "targets": 5,
         "defaultContent": "N/A",
         "data": function data(d) {
-          return d.org_name;
+          return d.date;
         }
       }, {
         "searchable": false,
@@ -47384,12 +47352,20 @@ var lobbyist_typeList = {};
         "targets": 6,
         "defaultContent": "N/A",
         "data": function data(d) {
-          return d.lobbyist_type;
+          return d.org_name;
         }
       }, {
         "searchable": false,
         "orderable": true,
         "targets": 7,
+        "defaultContent": "N/A",
+        "data": function data(d) {
+          return d.lobbyist_type;
+        }
+      }, {
+        "searchable": false,
+        "orderable": true,
+        "targets": 8,
         "defaultContent": "N/A",
         "data": function data(d) {
           return d.purpose;
@@ -47460,8 +47436,31 @@ var lobbyist_typeList = {};
         dc.redrawAll();
       }, 250);
     }
-  } //Reset charts
+  } //Institution filters
 
+
+  $('.institution-filter-btn').click(function () {
+    var filter = 'all';
+
+    if ($(this).hasClass('inst1')) {
+      filter = 'Državni Svet Republike Slovenije';
+      vuedata.instFilter = 'inst1';
+    } else if ($(this).hasClass('inst2')) {
+      filter = 'Državni Zbor Republike Slovenije';
+      vuedata.instFilter = 'inst2';
+    } else {
+      vuedata.instFilter = 'all';
+    }
+
+    searchDimension.filter(function (d) {
+      if (filter == 'all') {
+        return true;
+      } else {
+        return d.indexOf(filter.toLowerCase()) !== -1;
+      }
+    });
+    dc.redrawAll();
+  }); //Reset charts
 
   var resetGraphs = function resetGraphs() {
     for (var c in charts) {
@@ -47472,6 +47471,7 @@ var lobbyist_typeList = {};
 
     searchDimension.filter(null);
     $('#search-input').val('');
+    vuedata.instFilter = 'all';
     dc.redrawAll();
   };
 
@@ -47479,10 +47479,9 @@ var lobbyist_typeList = {};
     resetGraphs();
   }); //Render charts
 
-  createInstitutionTypeChart();
   createTopLobbyistsChart();
   createLobbyistCategoryChart();
-  createInstitutionTypeRowChart();
+  createPartyChart();
   createOfficialTypeChart();
   createPurposeTypeChart();
   createContactTypeChart();
@@ -47688,7 +47687,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56331" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55743" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -47863,4 +47862,4 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["C:/Users/ElaineG/AppData/Local/Yarn/config/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","tab_a.js"], null)
+},{}]},{},["C:/Users/ElaineG/AppData/Local/Yarn/config/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","tab_c.js"], null)
