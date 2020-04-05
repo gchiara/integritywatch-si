@@ -23,9 +23,12 @@
               <!-- INFO -->
               <div class="col-md-8 chart-col" v-if="showInfo">
                 <div class="boxed-container description-container">
-                  <h1>Varuh Integritete – Evidenca poslovnih</h1>
-                  <p>Lorem Ipsum <a href="#" @click="readMore = true">Preberi več</a>.</p>
-                  <p v-show="readMore">S preprostim klikom na grafe ali sezname spodaj lahko uporabniki razvrščajo in filtrirajo podatke o lobistničh stikih.</p>  
+                  <h1>Varuh integritete – Omejitve poslovanja</h1>
+                  <p>To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled evidence subjektov, s katerimi veljajo omejitve poslovanja. <a href="#" @click="readMore = true">Preberi več</a>.</p>
+                  <p v-show="readMore">
+                    Seznam subjektov, s katerimi veljajo omejitve poslovanja, vsebuje podatke, ki jih Komisija za preprečevanje korupcije prejme od organizacij javnega sektorja. Tem morajo funkcionarji v mesecu dni po nastopu funkcije sporočiti podatke o povezanih subjektih, morebitne spremembe pa v osmih dneh od nastanka. Organi so dolžni prejete podatke sporočiti Komisiji za preprečevanje korupcije v 15 dneh od prejema.<br /> 
+                    Omejitve poslovanja veljajo po Zakonu o integriteti in preprečevanju korupcije od trenutka, ko nastanejo in veljajo ne glede na to,  ali so vpisane na seznam. 
+                  </p>  
                   <i class="material-icons close-btn" @click="showInfo = false">close</i>
                 </div>
               </div>
@@ -74,7 +77,7 @@
                       <th class="header">Subjekt</th>
                       <th class="header">Velja od</th>
                       <th class="header">Velja do</th>
-                      <th class="header">Št. transakcij v času, ko so veljale omejitve poslovanja</th> 
+                      <th class="header">Št. transakcij v času veljavnosti omejitve poslovanja</th> 
                     </tr>
                   </thead>
                 </table>
@@ -112,7 +115,11 @@
         <div class="row">
           <div class="footer-col col-12 col-sm-12 footer-counts">
             <div class="dc-data-count count-box">
-              <div class="filter-count">0</div>od <strong class="total-count">0</strong> Omejitve
+              <div class="filter-count">0</div>od <strong class="total-count">0</strong> omejitev
+            </div>
+            <div class="footer-input">
+              <input type="text" id="search-input" placeholder="Iskanje">
+              <i class="material-icons">search</i>
             </div>
           </div>
         </div>
@@ -125,7 +132,7 @@
         </div>
       </div>
       <!-- Loader -->
-      <loader v-if="loader" :text="'Loading ...'" />
+      <loader v-if="loader" :text="'To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled evidence subjektov, s katerimi organ ne sme poslovati zaradi omejitev poslovanja.'" />
     </div>
 
     <script type="text/javascript" src="vendor/js/d3.v5.min.js"></script>

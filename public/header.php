@@ -6,28 +6,30 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a href="./" class="nav-link" :class="{active: page == 'tabA'}">Lobističnih Stikov</a>
+        <a href="./" class="nav-link" :class="{active: page == 'tabA'}">Lobiranje vlade</a>
       </li>
       <li class="nav-item">
         <a href="./parlamenta.php" class="nav-link" :class="{active: page == 'tabB'}">Lobiranje parlamenta</a>
       </li>
       <li class="nav-item">
-        <a href="./limitations.php" class="nav-link" :class="{active: page == 'tabC'}">Evidenca poslovnih</a>
+        <a href="./limitations.php" class="nav-link" :class="{active: page == 'tabC'}">Omejitve poslovanja</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Druge različice
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="https://www.integritywatch.fr/" target="_blank">France</a>
-          <a class="dropdown-item" href="https://openaccess.transparency.org.uk/" target="_blank">United Kingdom</a>
-          <a class="dropdown-item" href="https://integritywatch.cl/" target="_blank">Chile</a>
+          <a class="dropdown-item" href="https://www.integritywatch.eu/" target="_blank">Evropska unija</a>
+          <a class="dropdown-item" href="https://www.integritywatch.fr/" target="_blank">Francija</a>
+          <a class="dropdown-item" href="https://openaccess.transparency.org.uk/" target="_blank">Velika Britanija</a>
+          <a class="dropdown-item" href="https://integritywatch.cl/" target="_blank">Čile</a>
+          <a class="dropdown-item" href="http://www.soldiepolitica.it/" target="_blank">Italija</a>
         </div>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a href="./about.php" class="nav-link">O Integrity Watch</a>
+        <a href="./about.php" class="nav-link">O Varuhu integritete</a>
       </li>
       <li class="nav-item">
         <i class="material-icons nav-link icon-btn info-btn" @click="showInfo = !showInfo">info</i>

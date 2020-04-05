@@ -46584,7 +46584,9 @@ exports.default = _default;
       _c("div", { staticClass: "loader" }),
       _vm._v(" "),
       _c("div", { staticClass: "loader-text below" }, [
-        _vm._v("\n      Please wait a moment for the data to load ...\n    ")
+        _vm._v(
+          "\n      Prosimo, počakajte nekaj trenutkov, da se podatki naložijo.\n    "
+        )
       ])
     ])
   ])
@@ -46768,27 +46770,27 @@ var vuedata = {
   charts: {
     topLobbyists: {
       title: 'Lobisti – Top 10',
-      info: ''
+      info: 'Organizacije, ki so z institucijo opravile največ poročanih lobističnih stikov.<br />Razporeditev se spreminja glede na vsakokratno izbiro filtrov.'
     },
     lobbyistCategory: {
-      title: 'Statusi lobista',
-      info: ''
+      title: 'Status lobista',
+      info: 'Diagram prikazuje porazdelitev poročanih lobističnih stikov institucije z lobisti glede na njihov status.'
     },
     party: {
-      title: 'Lobistični stiki politične stranke',
-      info: ''
+      title: 'Lobistični stiki – politične stranke',
+      info: 'Prikaz razdelitve poročanih lobističnih stikov po političnih strankah v instituciji. Vključeni so poročani lobistični stiki funkcionarjev in javnih uslužbencev.<br />Lobiranec mora o vsakem stiku z lobistom, ki ima namen lobirati, sestaviti zapis in ga v roku treh dni posredovati v vednost svojemu predstojniku in Komisiji za preprečevanje korupcije.<br />Opozorilo: Delež neznanih lobističnih stikov je nesorazmerno visok zaradi slabe kakovosti podatkov oziroma zaradi nedoslednega poročanja v zapisih o lobističnih stikih.'
     },
     officialType: {
       title: 'Funkcija/položaj lobiranca',
-      info: ''
+      info: 'Pravila o poročanju lobističnih stikov veljajo tako za funkcionarje kot javne uslužbence. Diagram odraža porazdelitev števila poročanih stikov glede na funkcijo oziroma položaj lobiranca.'
     },
     purposeType: {
-      title: 'Število lobističnih stikov po namenu lobiranja',
-      info: ''
+      title: 'Namen lobiranja',
+      info: 'Diagram prikazuje porazdelitev poročanih lobističnih stikov glede na namen lobiranja. Možna sta dva namena: vpliv na sprejem predpisov in drugih splošnih aktov in vpliv na odločanje v drugih zadevah. Poimenovanje obeh namenov je skrajšano.'
     },
     contactType: {
       title: 'Način lobiranja',
-      info: ''
+      info: 'Diagram prikazuje porazdelitev poročanih lobističnih stikov glede na način lobiranja.'
     },
     mainTable: {
       chart: null,
@@ -46812,6 +46814,16 @@ var vuedata = {
     "Ministrstvo Za Okolje In Prostor": "Ministrva",
     "Ministrstvo Za Pravosodje": "Ministrva",
     "Ministrstvo Za Zunanje Zadeve": "Ministrva"
+  },
+  lobbyistTypeCategories: {
+    "Lobist je izvoljeni predstavnik interesne organizacije za katero lobira": "Izvoljeni predstavnik interesne organizacije",
+    "Lobist je vpisan v register lobistov v RS": "Vpisan v register lobistov",
+    "Lobist je zakoniti zastopnik interesne organizacije za katero lobira": "Zakoniti zastopnik interesne organizacije",
+    "Lobist lobira za interesno organizacijo v kateri je zaposlen": "Zaposlen v interesni organizaciji"
+  },
+  purposeCategories: {
+    "Vpliv na sprejem predpisov in drugih splošnih aktov": "Sprejem predpisov",
+    "vpliv na odločanje v drugih zadevah": "Odločanje v drugih zadevah"
   },
   institutionEntries: {},
   orgEntries: {},
@@ -46839,6 +46851,12 @@ var vuedata = {
       "Lobist je zakoniti zastopnik interesne organizacije za katero lobira": "#39c0b0",
       "Lobist lobira za interesno organizacijo v kateri je zaposlen": "#30cfbd"
     },
+    lobbyistTypeCategory: {
+      "Izvoljeni predstavnik interesne organizacije": "#449188",
+      "Vpisan v register lobistov": "#41ab9f",
+      "Zakoniti zastopnik interesne organizacije": "#39c0b0",
+      "Zaposlen v interesni organizaciji": "#30cfbd"
+    },
     contactType: {
       "Osebno": "#449188",
       "Po e-pošti": "#41ab9f",
@@ -46847,8 +46865,8 @@ var vuedata = {
       "Drugo": "#63eddd"
     },
     purpose: {
-      "Vpliv na sprejem predpisov in drugih splošnih aktov": "#449188",
-      "vpliv na odločanje v drugih zadevah": "#39c0b0"
+      "Sprejem predpisov": "#449188",
+      "Odločanje v drugih zadevah": "#39c0b0"
     }
   } //Set vue components and Vue app
 
@@ -47080,6 +47098,7 @@ var lobbyist_typeList = {};
 
     _.each(d.lobbyist_type.split(','), function (l) {
       l = l.trim();
+      l = vuedata.lobbyistTypeCategories[l];
       d.lobbyist_type_list.push(l);
 
       if (lobbyist_typeList[l]) {
@@ -47088,6 +47107,8 @@ var lobbyist_typeList = {};
         lobbyist_typeList[l] = 1;
       }
     });
+
+    d.purposeStreamlined = vuedata.purposeCategories[d.purpose];
   }); //Set dc main vars. The second crossfilter is used to handle the travels stacked bar chart.
 
 
@@ -47108,7 +47129,40 @@ var lobbyist_typeList = {};
     });
     var group = dimension.group().reduceSum(function (d) {
       return 1;
-    });
+    }); //Filter entries with 0 and show extra committees if no filters are applied
+
+    var filteredGroup = function (source_group) {
+      return {
+        all: function all() {
+          var entriesToAdd = ["interesna skupina delodajalcev", "interesna skupina delojemalcev", "interesna skupina kmetov, obrtnikov in samostojnih poklicev", "interesna skupina negospodarskih dejavnosti", "interesna skupina lokalnih interesov"];
+          var data = source_group.all().filter(function (d) {
+            return true;
+          });
+
+          if (vuedata.instFilter == 'inst1') {
+            data = source_group.all().filter(function (d) {
+              return d.value != 0;
+            });
+
+            _.each(entriesToAdd, function (entry) {
+              var hasEntry = _.find(data, function (x) {
+                return x.key == entry;
+              });
+
+              if (!hasEntry) {
+                data.push({
+                  key: entry,
+                  value: 0
+                });
+              }
+            });
+          }
+
+          return data;
+        }
+      };
+    }(group);
+
     var width = recalcWidth(charts.party.divId);
     var charsLength = recalcCharsLength(width);
     chart.width(width).height(415).margins({
@@ -47116,7 +47170,7 @@ var lobbyist_typeList = {};
       left: 0,
       right: 0,
       bottom: 20
-    }).group(group).dimension(dimension).colorCalculator(function (d, i) {
+    }).group(filteredGroup).dimension(dimension).colorCalculator(function (d, i) {
       return vuedata.colors.default1;
     }).label(function (d) {
       if (d.key && d.key.length > charsLength) {
@@ -47235,7 +47289,7 @@ var lobbyist_typeList = {};
       var thisKey = d.key;
       return thisKey + ': ' + d.value;
     }).dimension(dimension).colorCalculator(function (d, i) {
-      return vuedata.colors.lobbyistType[d.key];
+      return vuedata.colors.lobbyistTypeCategory[d.key];
     }).group(group);
     chart.render();
   }; //CHART 5
@@ -47244,7 +47298,7 @@ var lobbyist_typeList = {};
   var createPurposeTypeChart = function createPurposeTypeChart() {
     var chart = charts.purposeType.chart;
     var dimension = ndx.dimension(function (d) {
-      return d.purpose;
+      return d.purposeStreamlined;
     });
     var group = dimension.group().reduceSum(function (d) {
       return 1;
@@ -47471,7 +47525,7 @@ var lobbyist_typeList = {};
 
     searchDimension.filter(null);
     $('#search-input').val('');
-    vuedata.instFilter = 'all';
+    $('.institution-filter-btn.inst2').click();
     dc.redrawAll();
   };
 
@@ -47589,71 +47643,8 @@ var lobbyist_typeList = {};
   }
 
   drawInstitutionsCounter();
-  drawLobbyistsCounter(); //Custom counters
-
-  /*
-  function drawActivitiesCounter() {
-    var dim = ndx.dimension (function(d) {
-      if (!d.Id) {
-        return "";
-      } else {
-        return d.Id;
-      }
-    });
-    var group = dim.group().reduce(
-      function(p,d) {  
-        p.nb +=1;
-        if (!d.Id) {
-          return p;
-        }
-        p.actnum = +d.PersoonNevenfunctie.length;
-        p.giftsnum += +d.PersoonGeschenk.length;
-        p.travelnum += +d.PersoonReis.length;
-        return p;
-      },
-      function(p,d) {  
-        p.nb -=1;
-        if (!d.Id) {
-          return p;
-        }
-        p.actnum = +d.PersoonNevenfunctie.length;
-        p.giftsnum -= +d.PersoonGeschenk.length;
-        p.travelnum -= +d.PersoonReis.length;
-        return p;
-      },
-      function(p,d) {  
-        return {nb: 0, actnum:0, giftsnum: 0, travelnum: 0}; 
-      }
-    );
-    group.order(function(p){ return p.nb });
-    var actnum = 0;
-    var giftsnum = 0;
-    var travelnum = 0;
-    var counter = dc.dataCount(".count-box-activities")
-    .dimension(group)
-    .group({value: function() {
-      giftsnum = 0;
-      travelnum = 0;
-      return group.all().filter(function(kv) {
-        if (kv.value.nb >0) {
-          actnum += +kv.value.actnum;
-          giftsnum += +kv.value.giftsnum;
-          travelnum += +kv.value.travelnum;
-        }
-        return kv.value.nb > 0; 
-      }).length;
-    }})
-    .renderlet(function (chart) {
-      $(".nbactivities").text(actnum);
-      $(".nbgifts").text(giftsnum);
-      $(".nbtravels").text(travelnum);
-      actnum=0;
-    });
-    counter.render();
-  }
-  drawActivitiesCounter();
-  */
-  //Window resize function
+  drawLobbyistsCounter();
+  $('.institution-filter-btn.inst2').click(); //Window resize function
 
   window.onresize = function (event) {
     resizeGraphs();
@@ -47687,7 +47678,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56331" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50263" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -46584,7 +46584,9 @@ exports.default = _default;
       _c("div", { staticClass: "loader" }),
       _vm._v(" "),
       _c("div", { staticClass: "loader-text below" }, [
-        _vm._v("\n      Please wait a moment for the data to load ...\n    ")
+        _vm._v(
+          "\n      Prosimo, počakajte nekaj trenutkov, da se podatki naložijo.\n    "
+        )
       ])
     ])
   ])
@@ -46768,21 +46770,21 @@ var vuedata = {
   charts: {
     institutions: {
       title: 'Število omejitev na institucijo',
-      info: ''
+      info: 'Prikaz porazdelitve vpisanih omejitev poslovanja po posameznih organizacijah javnega sektorja. S poslovnimi subjekti z veljavnimi omejitvami poslovanja organizacije ne smejo poslovati. Omejitve ne veljajo za poslovanje na podlagi pogodb, ki so bile sklenjene, preden je funkcionar nastopil funkcijo.'
     },
     business: {
-      title: 'Omejitev do',
-      info: ''
+      title: 'Vrsta subjekta',
+      info: 'Prikaz porazdelitve vpisanih omejitev poslovanja po vrstah subjektov. Subjekti se delijo v dve skupini: poslovne subjekte in kmetijska gospodarstva .'
     },
     limitations: {
-      title: 'Časovno omejen ali neomejen?',
-      info: ''
+      title: 'Časovna omejitev',
+      info: 'Prikaz porazdelitve omejitev poslovanja glede na njihovo časovno omejenost.'
     },
     mainTable: {
       chart: null,
       type: 'table',
-      title: 'Table',
-      info: ''
+      title: 'Omejitve',
+      info: 'Podrobnejši podatki o omejitvah poslovanja.'
     }
   },
   selectedElement: {
@@ -46994,7 +46996,7 @@ var lobbyist_typeList = {};
 (0, _d3Request.csv)('./data/tab_c/business_limitations.csv?' + randomPar, function (err, entries) {
   //Loop through data to aply fixes and calculations
   _.each(entries, function (d) {
-    console.log(d);
+    d.Organizacija = d.Organizacija.charAt(0).toUpperCase() + d.Organizacija.slice(1).toLowerCase();
   }); //Set dc main vars. The second crossfilter is used to handle the travels stacked bar chart.
 
 
@@ -47290,7 +47292,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56331" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50263" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

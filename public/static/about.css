@@ -1077,6 +1077,9 @@ table.dataTable tbody tr:hover {
   }
 }
 
+.tabC .chart-table td:nth-child(1), .tabC .chart-table th:nth-child(1) {
+  display: none;
+}
 @media only screen and (max-width: 768px) {
   .tabC .chart-table td:nth-child(3), .tabC .chart-table td:nth-child(4), .tabC .chart-table td:nth-child(7), .tabC .chart-table th:nth-child(3), .tabC .chart-table th:nth-child(4), .tabC .chart-table th:nth-child(7) {
     display: none;

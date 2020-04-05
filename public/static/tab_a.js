@@ -46584,7 +46584,9 @@ exports.default = _default;
       _c("div", { staticClass: "loader" }),
       _vm._v(" "),
       _c("div", { staticClass: "loader-text below" }, [
-        _vm._v("\n      Please wait a moment for the data to load ...\n    ")
+        _vm._v(
+          "\n      Prosimo, počakajte nekaj trenutkov, da se podatki naložijo.\n    "
+        )
       ])
     ])
   ])
@@ -46767,55 +46769,65 @@ var vuedata = {
   travelFilter: 'all',
   charts: {
     institutionType: {
-      title: 'Lobistični stiki izvršilne oblasti',
-      info: ''
+      title: 'Lobistični stiki vlade',
+      info: 'Lobiranec mora o vsakem stiku z lobistom, ki ima namen lobirati, sestaviti zapis in ga v roku treh dni posredovati v vednost svojemu predstojniku in Komisiji za preprečevanje korupcije. Diagram odraža porazdelitev števila poročanih stikov glede na vrsto institucije (ministrstva, Kabinet predsednika vlade, Generalni sekretariat vlade).'
     },
     topLobbyists: {
       title: 'Lobisti – Top 10',
       info: ''
     },
     lobbyistCategory: {
-      title: 'Statusi lobista',
-      info: ''
+      title: 'Status lobista',
+      info: 'Diagram prikazuje porazdelitev poročanih lobističnih stikov vlade z lobisti glede na njihov status.'
     },
     institutionTypeRow: {
-      title: 'Statusi lobistaLobistični stiki s strani državnih ustanov izvršilne oblasti',
-      info: ''
+      title: 'Lobistični stiki vlade po resorjih',
+      info: 'Prikaz razdelitve poročanih lobističnih stikov po področjih oziroma vladnih institucijah. Vključeni so ministrstva brez organov v sestavi, kabinet predsednika vlade in generalni sekretariat vlade.'
     },
     officialType: {
       title: 'Funkcija/položaj lobiranca',
-      info: ''
+      info: 'Organizacije, ki so z vlado opravile največ poročanih lobističnih stikov.   Razporeditev se spreminja glede na vsakokratno izbiro filtrov.'
     },
     purposeType: {
-      title: 'Število lobističnih stikov po namenu lobiranja',
-      info: ''
+      title: 'Namen lobiranja',
+      info: 'Diagram prikazuje porazdelitev poročanih lobističnih stikov glede na namen lobiranja. Možna sta dva namena: vpliv na sprejem predpisov in drugih splošnih aktov in vpliv na odločanje v drugih zadevah. Poimenovanje obeh namenov je skrajšano.'
     },
     contactType: {
       title: 'Način lobiranja',
-      info: ''
+      info: 'Diagram prikazuje porazdelitev poročanih lobističnih stikov glede na način lobiranja.'
     },
     mainTable: {
       chart: null,
       type: 'table',
-      title: 'Table',
-      info: ''
+      title: 'Stiki',
+      info: 'Za dodatne informacije o posameznem lobističnem stiku kliknite nanj.'
     }
   },
   executiveCategories: {
-    "Generalni Sekretariat Vlade Republike Slovenije": "Genralni Sekretariat",
-    "Kabinet Predsednika Vlade Republike Slovenije": "Kabinet Predsednika",
-    "Ministrstvo Za Delo, Družino, Socialne Zadeve In Enake Možnosti": "Ministrva",
-    "Ministrstvo Za Finance": "Ministrva",
-    "Ministrstvo Za Gospodarski Razvoj In Tehnologijo": "Ministrva",
-    "Ministrstvo Za Infrastrukturo": "Ministrva",
-    "Ministrstvo Za Izobraževanje, Znanost In Šport": "Ministrva",
-    "Ministrstvo Za Javno Upravo": "Ministrva",
-    "Ministrstvo Za Kmetijstvo, Gozdarstvo In Prehrano": "Ministrva",
-    "Ministrstvo Za Kulturo": "Ministrva",
-    "Ministrstvo Za Notranje Zadeve": "Ministrva",
-    "Ministrstvo Za Okolje In Prostor": "Ministrva",
-    "Ministrstvo Za Pravosodje": "Ministrva",
-    "Ministrstvo Za Zunanje Zadeve": "Ministrva"
+    "Generalni Sekretariat Vlade Republike Slovenije": "Generalni sekretariat vlade",
+    "Kabinet Predsednika Vlade Republike Slovenije": "Kabinet predsednika vlade",
+    "Ministrstvo Za Delo, Družino, Socialne Zadeve In Enake Možnosti": "Ministrstva",
+    "Ministrstvo Za Finance": "Ministrstva",
+    "Ministrstvo Za Gospodarski Razvoj In Tehnologijo": "Ministrstva",
+    "Ministrstvo Za Infrastrukturo": "Ministrstva",
+    "Ministrstvo Za Izobraževanje, Znanost In Šport": "Ministrstva",
+    "Ministrstvo Za Javno Upravo": "Ministrstva",
+    "Ministrstvo Za Kmetijstvo, Gozdarstvo In Prehrano": "Ministrstva",
+    "Ministrstvo Za Kulturo": "Ministrstva",
+    "Ministrstvo Za Notranje Zadeve": "Ministrstva",
+    "Ministrstvo Za Okolje In Prostor": "Ministrstva",
+    "Ministrstvo Za Pravosodje": "Ministrstva",
+    "Ministrstvo Za Zunanje Zadeve": "Ministrstva"
+  },
+  lobbyistTypeCategories: {
+    "Lobist je izvoljeni predstavnik interesne organizacije za katero lobira": "Izvoljeni predstavnik interesne organizacije",
+    "Lobist je vpisan v register lobistov v RS": "Vpisan v register lobistov",
+    "Lobist je zakoniti zastopnik interesne organizacije za katero lobira": "Zakoniti zastopnik interesne organizacije",
+    "Lobist lobira za interesno organizacijo v kateri je zaposlen": "Zaposlen v interesni organizaciji"
+  },
+  purposeCategory: {
+    "Vpliv na sprejem predpisov in drugih splošnih aktov": "Sprejem predpisov",
+    "vpliv na odločanje v drugih zadevah": "Odločanje v drugih zadevah"
   },
   institutionEntries: {},
   orgEntries: {},
@@ -46828,9 +46840,9 @@ var vuedata = {
     generic: ["#3b95d0", "#4081ae", "#406a95", "#395a75"],
     default1: "#2b90b8",
     institutionsTypes: {
-      "Ministrva": "#0d506b",
-      "Kabinet Predsednika": "#1d7598",
-      "Genralni Sekretariat": "#2b90b8"
+      "Ministrstva": "#0d506b",
+      "Kabinet predsednika vlade": "#1d7598",
+      "Generalni sekretariat vlade": "#2b90b8"
     },
     function: {
       "Javni uslužbenec": "#0d506b",
@@ -46843,6 +46855,12 @@ var vuedata = {
       "Lobist je zakoniti zastopnik interesne organizacije za katero lobira": "#39c0b0",
       "Lobist lobira za interesno organizacijo v kateri je zaposlen": "#30cfbd"
     },
+    lobbyistTypeCategory: {
+      "Izvoljeni predstavnik interesne organizacije": "#449188",
+      "Vpisan v register lobistov": "#41ab9f",
+      "Zakoniti zastopnik interesne organizacije": "#39c0b0",
+      "Zaposlen v interesni organizaciji": "#30cfbd"
+    },
     contactType: {
       "Osebno": "#449188",
       "Po e-pošti": "#41ab9f",
@@ -46851,8 +46869,8 @@ var vuedata = {
       "Drugo": "#63eddd"
     },
     purpose: {
-      "Vpliv na sprejem predpisov in drugih splošnih aktov": "#449188",
-      "vpliv na odločanje v drugih zadevah": "#39c0b0"
+      "Sprejem predpisov": "#449188",
+      "Odločanje v drugih zadevah": "#39c0b0"
     }
   } //Set vue components and Vue app
 
@@ -47081,7 +47099,9 @@ var lobbyist_typeList = {};
     d.contact_type = d.contact_type.charAt(0).toUpperCase() + d.contact_type.slice(1);
     d.institution_lowerCase = d.institution.toLowerCase();
     d.institution_lowerCase = d.institution_lowerCase.charAt(0).toUpperCase() + d.institution_lowerCase.slice(1);
-    d.institution_lowerCase = d.institution_lowerCase.replace("republike slovenije", "Republike Slovenije"); //Streamline executive category
+    d.institution_lowerCase = d.institution_lowerCase.replace("republike slovenije", "Republike Slovenije"); //Streamline purpose
+
+    d.purposeStreamlined = vuedata.purposeCategory[d.purpose]; //Streamline executive category
 
     d.instituionStreamlined = vuedata.executiveCategories[d.institution]; //Split Lobbyist type into array
 
@@ -47089,6 +47109,7 @@ var lobbyist_typeList = {};
 
     _.each(d.lobbyist_type.split(','), function (l) {
       l = l.trim();
+      l = vuedata.lobbyistTypeCategories[l];
       d.lobbyist_type_list.push(l);
 
       if (lobbyist_typeList[l]) {
@@ -47236,7 +47257,7 @@ var lobbyist_typeList = {};
       var thisKey = d.key;
       return thisKey + ': ' + d.value;
     }).dimension(dimension).colorCalculator(function (d, i) {
-      return vuedata.colors.lobbyistType[d.key];
+      return vuedata.colors.lobbyistTypeCategory[d.key];
     }).group(group);
     chart.render();
   }; //CHART 5
@@ -47276,7 +47297,7 @@ var lobbyist_typeList = {};
   var createPurposeTypeChart = function createPurposeTypeChart() {
     var chart = charts.purposeType.chart;
     var dimension = ndx.dimension(function (d) {
-      return d.purpose;
+      return d.purposeStreamlined;
     });
     var group = dimension.group().reduceSum(function (d) {
       return 1;
@@ -47590,75 +47611,14 @@ var lobbyist_typeList = {};
   }
 
   drawInstitutionsCounter();
-  drawLobbyistsCounter(); //Custom counters
-
-  /*
-  function drawActivitiesCounter() {
-    var dim = ndx.dimension (function(d) {
-      if (!d.Id) {
-        return "";
-      } else {
-        return d.Id;
-      }
-    });
-    var group = dim.group().reduce(
-      function(p,d) {  
-        p.nb +=1;
-        if (!d.Id) {
-          return p;
-        }
-        p.actnum = +d.PersoonNevenfunctie.length;
-        p.giftsnum += +d.PersoonGeschenk.length;
-        p.travelnum += +d.PersoonReis.length;
-        return p;
-      },
-      function(p,d) {  
-        p.nb -=1;
-        if (!d.Id) {
-          return p;
-        }
-        p.actnum = +d.PersoonNevenfunctie.length;
-        p.giftsnum -= +d.PersoonGeschenk.length;
-        p.travelnum -= +d.PersoonReis.length;
-        return p;
-      },
-      function(p,d) {  
-        return {nb: 0, actnum:0, giftsnum: 0, travelnum: 0}; 
-      }
-    );
-    group.order(function(p){ return p.nb });
-    var actnum = 0;
-    var giftsnum = 0;
-    var travelnum = 0;
-    var counter = dc.dataCount(".count-box-activities")
-    .dimension(group)
-    .group({value: function() {
-      giftsnum = 0;
-      travelnum = 0;
-      return group.all().filter(function(kv) {
-        if (kv.value.nb >0) {
-          actnum += +kv.value.actnum;
-          giftsnum += +kv.value.giftsnum;
-          travelnum += +kv.value.travelnum;
-        }
-        return kv.value.nb > 0; 
-      }).length;
-    }})
-    .renderlet(function (chart) {
-      $(".nbactivities").text(actnum);
-      $(".nbgifts").text(giftsnum);
-      $(".nbtravels").text(travelnum);
-      actnum=0;
-    });
-    counter.render();
-  }
-  drawActivitiesCounter();
-  */
-  //Window resize function
+  drawLobbyistsCounter(); //Window resize function
 
   window.onresize = function (event) {
     resizeGraphs();
-  };
+  }; //Show disclaimer modal
+
+
+  $('#disclaimerModal').modal();
 });
 },{"jquery":"../node_modules/jquery/dist/jquery.js","datatables.net":"../node_modules/datatables.net/js/jquery.dataTables.js","datatables.net-dt":"../node_modules/datatables.net-dt/js/dataTables.dataTables.js","underscore":"../node_modules/underscore/underscore.js","../public/vendor/js/popper.min.js":"../public/vendor/js/popper.min.js","../public/vendor/js/bootstrap.min.js":"../public/vendor/js/bootstrap.min.js","d3-request":"../node_modules/d3-request/index.js","../public/vendor/css/bootstrap.min.css":"../public/vendor/css/bootstrap.min.css","../public/vendor/css/dc.css":"../public/vendor/css/dc.css","/scss/main.scss":"scss/main.scss","vue":"../node_modules/vue/dist/vue.esm.js","./components/Loader.vue":"components/Loader.vue","./components/ChartHeader.vue":"components/ChartHeader.vue"}],"C:/Users/ElaineG/AppData/Local/Yarn/config/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -47688,7 +47648,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56331" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50263" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -23,9 +23,12 @@
               <!-- INFO -->
               <div class="col-md-8 chart-col" v-if="showInfo">
                 <div class="boxed-container description-container">
-                  <h1>Varuh Integritete – Lobiranje parlementa</h1>
-                  <p>Lorem Ipsum <a href="#" @click="readMore = true">Preberi več</a>.</p>
-                  <p v-show="readMore">S preprostim klikom na grafe ali sezname spodaj lahko uporabniki razvrščajo in filtrirajo podatke o lobistničh stikih.</p>  
+                  <h1>Varuh integritete – Lobistični stiki parlamenta</h1>
+                  <p>To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled lobističnih stikov opravljenih  v Državnem zboru in Državnem svetu Republike Slovenije. <a href="#" @click="readMore = true">Preberi več</a>.</p>
+                  <p v-show="readMore">
+                    Upoštevani so poročani lobistični stiki funkcionarjev in javnih uslužbencev Državnega zbora in Državnega sveta Republike Slovenije z lobisti.<br />
+                    S preprostim klikom na pasice, grafe ali sezname spodaj lahko uporabniki razvrščajo in filtrirajo podatke o lobističnih stikih obeh domov parlamenta.  
+                  </p>  
                   <i class="material-icons close-btn" @click="showInfo = false">close</i>
                 </div>
               </div>
@@ -35,13 +38,12 @@
           <div class="col-md-6 chart-subrow">
             <div class="row chart-subrow-row">
               <div class="col-md-12 subrow-title-container">
-                <div class="subrow-title">DRŽAVNE USTANOVE</div>
+                <div class="subrow-title">PARLAMENT</div>
               </div>
               <div class="col-md-12 chart-col">
                 <div class="boxed-container institution-filter-container">
-                  <button class="institution-filter-btn inst1" :class="{ active: instFilter == 'inst1' }">Državni Svet Republike Slovenije</button>
                   <button class="institution-filter-btn inst2" :class="{ active: instFilter == 'inst2' }">Državni Zbor Republike Slovenije</button>
-                  <button class="institution-filter-btn all" :class="{ active: instFilter == 'all' }">All</button>
+                  <button class="institution-filter-btn inst1" :class="{ active: instFilter == 'inst1' }">Državni Svet Republike Slovenije</button>
                 </div>
               </div>
               <div class="col-md-12 chart-col">
@@ -106,8 +108,8 @@
                       <th class="header">Institucija</th>
                       <th class="header">Datum</th>
                       <th class="header">Organizacija</th> 
-                      <th class="header">Namen In Cilj Lobiranja</th>
-                      <th class="header">Dodatne informa-cije?</th> 
+                      <th class="header">Status lobista</th>
+                      <th class="header">Namen in cilj lobiranja</th> 
                     </tr>
                   </thead>
                 </table>
@@ -161,10 +163,10 @@
               <div class="filter-count">0</div>od <strong class="total-count">0</strong> stikov
             </div>
             <div class="count-box count-box-institutions">
-              <div class="filter-count nbinstitutions">0</div>od <strong class="total-count">0</strong> instituticji
+              <div class="filter-count nbinstitutions">0</div>od <strong class="total-count">0</strong> institucij
             </div>
             <div class="count-box count-box-lobbyists">
-              <div class="filter-count nblobbyists">0</div>od <strong class="total-count">0</strong> lobistu
+              <div class="filter-count nblobbyists">0</div>od <strong class="total-count">0</strong> lobistov
             </div>
             <div class="footer-input">
               <input type="text" id="search-input" placeholder="Iskanje">
@@ -181,7 +183,7 @@
         </div>
       </div>
       <!-- Loader -->
-      <loader v-if="loader" :text="'Loading ...'" />
+      <loader v-if="loader" :text="'To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled poročanih lobističnih stikov Državnega zbora in Državnega sveta Republike Slovenije.'" />
     </div>
 
     <script type="text/javascript" src="vendor/js/d3.v5.min.js"></script>
