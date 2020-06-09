@@ -32,8 +32,12 @@ var vuedata = {
   showShare: true,
   showAllCharts: true,
   chartMargin: 40,
-  travelFilter: 'all',
+  selectedMandate: 'all',
   charts: {
+    mandateSelector: {
+      title: 'Izberite mandat',
+      info: 'Izberite obdobje pregledovanja poročanih lobističnih stikov po mandatih vlad. Z možnostjo "Vse" pregledujete vse poročane lobistične stike izbranih vladnih institucij od 13. 9. 2018 naprej'
+    },
     institutionType: {
       title: 'Lobistični stiki vlade',
       info: 'Lobiranec mora o vsakem stiku z lobistom, ki ima namen lobirati, sestaviti zapis in ga v roku treh dni posredovati v vednost svojemu predstojniku in Komisiji za preprečevanje korupcije. Diagram odraža porazdelitev števila poročanih stikov glede na vrsto institucije (ministrstva, Kabinet predsednika vlade, Generalni sekretariat vlade).'
@@ -70,20 +74,9 @@ var vuedata = {
     }
   },
   executiveCategories: {
-    "Generalni Sekretariat Vlade Republike Slovenije": "Generalni sekretariat vlade",
-    "Kabinet Predsednika Vlade Republike Slovenije": "Kabinet predsednika vlade",
-    "Ministrstvo Za Delo, Družino, Socialne Zadeve In Enake Možnosti": "Ministrstva",
-    "Ministrstvo Za Finance": "Ministrstva",
-    "Ministrstvo Za Gospodarski Razvoj In Tehnologijo": "Ministrstva",
-    "Ministrstvo Za Infrastrukturo": "Ministrstva",
-    "Ministrstvo Za Izobraževanje, Znanost In Šport": "Ministrstva",
-    "Ministrstvo Za Javno Upravo": "Ministrstva",
-    "Ministrstvo Za Kmetijstvo, Gozdarstvo In Prehrano": "Ministrstva",
-    "Ministrstvo Za Kulturo": "Ministrstva",
-    "Ministrstvo Za Notranje Zadeve": "Ministrstva",
-    "Ministrstvo Za Okolje In Prostor": "Ministrstva",
-    "Ministrstvo Za Pravosodje": "Ministrstva",
-    "Ministrstvo Za Zunanje Zadeve": "Ministrstva"
+    "generalni sekretariat vlade republike slovenije": "Generalni sekretariat vlade",
+    "kabinet predsednika vlade republike slovenije": "Kabinet predsednika vlade",
+    "služba vlade republike slovenije za razvoj in evropsko kohezijsko politiko": "Generalni sekretariat vlade"
   },
   lobbyistTypeCategories: {
     "Lobist je izvoljeni predstavnik interesne organizacije za katero lobira": "Izvoljeni predstavnik interesne organizacije",
@@ -92,7 +85,7 @@ var vuedata = {
     "Lobist lobira za interesno organizacijo v kateri je zaposlen": "Zaposlen v interesni organizaciji",
   },
   purposeCategory: {
-    "Vpliv na sprejem predpisov in drugih splošnih aktov": "Sprejem predpisov",
+    "vpliv na sprejem predpisov in drugih splošnih aktov": "Sprejem predpisov",
     "vpliv na odločanje v drugih zadevah": "Odločanje v drugih zadevah"
   },
   institutionEntries: {},
@@ -105,7 +98,8 @@ var vuedata = {
     institutionsTypes: {
       "Ministrstva": "#0d506b",
       "Kabinet predsednika vlade": "#1d7598",
-      "Generalni sekretariat vlade": "#2b90b8"
+      "Generalni sekretariat vlade": "#2b90b8",
+      "": "#ccc"
     },
     function: {
       "Javni uslužbenec": "#0d506b",
@@ -113,17 +107,19 @@ var vuedata = {
     },
     default2: "#449188",
     lobbyistType: {
-      "Lobist je izvoljeni predstavnik interesne organizacije za katero lobira": "#449188",
-      "Lobist je vpisan v register lobistov v RS": "#41ab9f",
-      "Lobist je zakoniti zastopnik interesne organizacije za katero lobira": "#39c0b0",
-      "Lobist lobira za interesno organizacijo v kateri je zaposlen": "#30cfbd",
+      "Izvoljeni predstavnik organizacije": "#449188",
+      "Registrirani lobist": "#41ab9f",
+      "Zakoniti zastopnik organizacije": "#39c0b0",
+      "Zaposlen v organizaciji": "#30cfbd",
     },
+    /*
     lobbyistTypeCategory: {
       "Izvoljeni predstavnik interesne organizacije": "#449188",
       "Vpisan v register lobistov": "#41ab9f",
       "Zakoniti zastopnik interesne organizacije": "#39c0b0",
       "Zaposlen v interesni organizaciji": "#30cfbd",
     },
+    */
     contactType: {
       "Osebno": "#449188",
       "Po e-pošti": "#41ab9f",
@@ -332,7 +328,7 @@ for ( var i = 0; i < 5; i++ ) {
   randomPar += randomCharacters.charAt(Math.floor(Math.random() * randomCharacters.length));
 }
 //Load data and generate charts
-var lobbyist_typeList = {}
+//var lobbyist_typeList = {}
 csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
   //Loop through data to aply fixes and calculations
   _.each(contacts, function (d) {
@@ -354,11 +350,25 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
     d.institution_lowerCase = d.institution.toLowerCase();
     d.institution_lowerCase = d.institution_lowerCase.charAt(0).toUpperCase() + d.institution_lowerCase.slice(1);
     d.institution_lowerCase = d.institution_lowerCase.replace("republike slovenije", "Republike Slovenije");
+    d.institution_lowerCase = d.institution_lowerCase.replace("vlade Republike Slovenije", "Vlade Republike Slovenije");
     //Streamline purpose
-    d.purposeStreamlined = vuedata.purposeCategory[d.purpose];
+    d.purposeStreamlined = vuedata.purposeCategory[d.purpose.toLowerCase()];
+    if(!d.purposeStreamlined) {
+      console.log(d.purpose);
+    }
     //Streamline executive category
-    d.instituionStreamlined = vuedata.executiveCategories[d.institution];
+    d.instituionStreamlined = "";
+    if(d.institution.toLowerCase().indexOf("ministrstvo za") > -1) {
+      d.instituionStreamlined = "Ministrstva";
+    } else {
+      d.instituionStreamlined = vuedata.executiveCategories[d.institution.toLowerCase()];
+    }
+    if(!d.instituionStreamlined) {
+      console.log(d);
+    }
+    
     //Split Lobbyist type into array
+    /*
     d.lobbyist_type_list = [];
     _.each(d.lobbyist_type.split(','), function (l) {
       l = l.trim();
@@ -370,13 +380,29 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
         lobbyist_typeList[l] = 1;
       }
     });
+    */
+    d.dateToInt = null;
+    if(d.date) {
+      /*
+      var splitdate = d.date.split('.');
+      d.dateToInt = splitdate[2] + splitdate[1] + splitdate[0];
+      */
+      var splitdate = d.date.split('-');
+      d.dateToInt = splitdate[0] + splitdate[1] + splitdate[2];
+      d.dateToInt = parseInt(d.dateToInt);
+    } else {
+      console.log(d);
+    }
   });
 
   //Set dc main vars. The second crossfilter is used to handle the travels stacked bar chart.
   var ndx = crossfilter(contacts);
   var searchDimension = ndx.dimension(function (d) {
-      var entryString = ' ';
+      var entryString = d.function + ' ' + d.party + ' ' + d.institution + ' ' + d.contact_type + ' ' + d.org_name + ' ' + d.lobbyist_type + ' ' + d.purpose + ' ' + d.purpose_details;
       return entryString.toLowerCase();
+  });
+  var dateDimension = ndx.dimension(function (d) {
+    return d.dateToInt;
   });
 
   //CHART 1
@@ -452,7 +478,7 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
     function getLobbyistType(org) {
       var c = _.find(contacts, function (x) { return x.org_name == org });
       if(c) {
-        return c.lobbyist_type.split(',')[0];
+        return c.lobbyist_type;
       }
       return ""; 
     }
@@ -483,6 +509,7 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
       .dimension(dimension)
       .colorCalculator(function(d, i) {
         var type = getLobbyistType(d.key);
+        console.log(type);
         return vuedata.colors.lobbyistType[type];
       })
       .label(function (d) {
@@ -504,8 +531,9 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
   var createLobbyistCategoryChart = function() {
     var chart = charts.lobbyistCategory.chart;
     var dimension = ndx.dimension(function (d) {
-      return d.lobbyist_type_list; 
-    }, true);
+      //return d.lobbyist_type_list; 
+      return d.lobbyist_type;
+    });
     var group = dimension.group().reduceSum(function (d) { return 1; });
     var sizes = calcPieSize(charts.lobbyistCategory.divId);
     chart
@@ -528,7 +556,7 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
       })
       .dimension(dimension)
       .colorCalculator(function(d, i) {
-        return vuedata.colors.lobbyistTypeCategory[d.key];
+        return vuedata.colors.lobbyistType[d.key];
       })
       .group(group);
 
@@ -645,16 +673,8 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
       "columnDefs": [
         {
           "searchable": false,
-          "orderable": false,
-          "targets": 0,   
-          data: function ( row, type, val, meta ) {
-            return count;
-          }
-        },
-        {
-          "searchable": false,
           "orderable": true,
-          "targets": 1,
+          "targets": 0,
           "defaultContent":"N/A",
           "data": function(d) {
             //id,function,party,institution,date,contact_type,org_name,lobbyist_type,purpose,purpose_details
@@ -664,7 +684,7 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
         {
           "searchable": false,
           "orderable": true,
-          "targets": 2,
+          "targets": 1,
           "defaultContent":"N/A",
           "data": function(d) {
             return d.function;
@@ -673,7 +693,7 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
         {
           "searchable": false,
           "orderable": true,
-          "targets": 3,
+          "targets": 2,
           "defaultContent":"N/A",
           "data": function(d) {
             return d.institution;
@@ -682,10 +702,19 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
         {
           "searchable": false,
           "orderable": true,
-          "targets": 4,
+          "targets": 3,
           "defaultContent":"N/A",
           "data": function(d) {
             return d.date;
+          }
+        },
+        {
+          "searchable": false,
+          "orderable": true,
+          "targets": 4,
+          "defaultContent":"N/A",
+          "data": function(d) {
+            return d.contact_type;
           }
         },
         {
@@ -720,7 +749,7 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
       "bPaginate": true,
       "bLengthChange": true,
       "bFilter": false,
-      "order": [[ 1, "desc" ]],
+      "order": [[ 0, "desc" ]],
       "bSort": true,
       "bInfo": true,
       "bAutoWidth": false,
@@ -731,9 +760,11 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
     var datatable = charts.mainTable.chart;
     datatable.on( 'draw.dt', function () {
       var PageInfo = $('#dc-data-table').DataTable().page.info();
+        /*
         datatable.DataTable().column(0, { page: 'current' }).nodes().each( function (cell, i) {
             cell.innerHTML = i + 1 + PageInfo.start;
         });
+        */
       });
       datatable.DataTable().draw();
 
@@ -787,12 +818,28 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
       }
     }
     searchDimension.filter(null);
+    dateDimension.filter(null);
+    vuedata.selectedMandate = 'all';
     $('#search-input').val('');
     dc.redrawAll();
   }
   $('.reset-btn').click(function(){
     resetGraphs();
   })
+
+  //Mandate selector
+  $( "#mandateSelector" ).change(function() {
+    dateDimension.filter(function(d) { 
+      if(vuedata.selectedMandate == 'all') {
+        return true;
+      } else if(vuedata.selectedMandate == 'm14') {
+        return d >= 20200313;
+      } else if(vuedata.selectedMandate == 'm13') {
+        return d >= 20180913 && d < 20200313;
+      }
+    });
+    dc.redrawAll();
+  });
   
   //Render charts
   createInstitutionTypeChart();

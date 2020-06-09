@@ -26,7 +26,7 @@
                   <h1>Varuh integritete – Lobistični stiki parlamenta</h1>
                   <p>To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled lobističnih stikov opravljenih  v Državnem zboru in Državnem svetu Republike Slovenije. <a href="#" @click="readMore = true">Preberi več</a>.</p>
                   <p v-show="readMore">
-                    Upoštevani so poročani lobistični stiki funkcionarjev in javnih uslužbencev Državnega zbora in Državnega sveta Republike Slovenije z lobisti.<br />
+                    Upoštevani so poročani lobistični stiki funkcionarjev in javnih uslužbencev Državnega zbora in Državnega sveta Republike Slovenije z lobisti.<br /><br />
                     S preprostim klikom na pasice, grafe ali sezname spodaj lahko uporabniki razvrščajo in filtrirajo podatke o lobističnih stikih obeh domov parlamenta.  
                   </p>  
                   <i class="material-icons close-btn" @click="showInfo = false">close</i>
@@ -42,8 +42,8 @@
               </div>
               <div class="col-md-12 chart-col">
                 <div class="boxed-container institution-filter-container">
-                  <button class="institution-filter-btn inst2" :class="{ active: instFilter == 'inst2' }">Državni Zbor Republike Slovenije</button>
-                  <button class="institution-filter-btn inst1" :class="{ active: instFilter == 'inst1' }">Državni Svet Republike Slovenije</button>
+                  <button class="institution-filter-btn inst2" :class="{ active: instFilter == 'inst2' }">Državni zbor Republike Slovenije</button>
+                  <button class="institution-filter-btn inst1" :class="{ active: instFilter == 'inst1' }">Državni svet Republike Slovenije</button>
                 </div>
               </div>
               <div class="col-md-12 chart-col">
@@ -101,12 +101,12 @@
                 <table class="table table-hover dc-data-table" id="dc-data-table">
                   <thead>
                     <tr class="header">
-                      <th class="header">Nr</th> 
-                      <th class="header">Zap. Št.</th>
-                      <th class="header">Funkcija/Položaj Lobiranca</th>
-                      <th class="header">Politična stranka</th>
+                      <th class="header">Št. stika</th>
+                      <th class="header">Funkcija/položaj lobiranca</th>
+                      <th class="header">Poslanska/interesna skupina</th>
                       <th class="header">Institucija</th>
                       <th class="header">Datum</th>
+                      <th class="header">Način lobiranja</th>
                       <th class="header">Organizacija</th> 
                       <th class="header">Status lobista</th>
                       <th class="header">Namen in cilj lobiranja</th> 
@@ -144,9 +144,9 @@
                     <div class="details-title details-title-right">LOBIST</div>
                     <div class="details-line"><span class="details-line-title">Organizacija:</span> {{ selectedElement.org_name }}</div>
                     <div class="details-line"><span class="details-line-title">Statusi lobista:</span> {{ selectedElement.lobbyist_type }}</div>
-                    <div class="details-line"><span class="details-line-title">Namen in cilj lobirankja:</span> {{ selectedElement.purpose }}</div>
+                    <div class="details-line"><span class="details-line-title">Namen in cilj lobiranja:</span> {{ selectedElement.purpose }}</div>
                     <div class="details-line"><span class="details-line-title">Skupno število lobističnih stikov:</span> {{ orgEntries[selectedElement.org_name] }}</div>
-                    <div class="details-line" v-if="selectedElement.purpose && selectedElement.purpose.length > 0"><span class="details-line-title">Dodatne informacije o namenu srečanja lobiranja:</span> {{ selectedElement.purpose }} </div>
+                    <div class="details-line" v-if="selectedElement.purpose && selectedElement.purpose.length > 0"><span class="details-line-title">Dodatne informacije o namenu srečanja lobiranja:</span> {{ selectedElement.purpose_details }} </div>
                     <div class="details-line" v-else><span class="details-line-title">Dodatne informacije o namenu srečanja lobiranja:</span> Dodatne informacije niso na voljo</div>
                   </div>
                 </div>

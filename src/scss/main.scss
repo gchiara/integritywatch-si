@@ -166,13 +166,13 @@ $color_lobby: #449188;
     height: auto;
   }
   &.tab_a_1 {
-    height: 500px;
+    height: 430px;
   }
   &.tab_a_2 {
-    height: 500px;
+    height: 430px;
   }
   &.tab_a_3 {
-    height: 620px;
+    height: 583px;
   }
   &.tab_a_4 {
     height: 600px;
@@ -181,10 +181,10 @@ $color_lobby: #449188;
     height: 600px;
   }
   &.tab_a_6 {
-    height: 520px;
+    height: 545px;
   }
   &.tab_a_7 {
-    height: 520px;
+    height: 545px;
   }
   &.tab_b_1 {
     height: 505px;
@@ -215,6 +215,14 @@ $color_lobby: #449188;
   }
   @media only screen and (max-width: 767px) {
     height: auto !important;
+  }
+}
+.mandate-selector-container {
+  width: 100%;
+  padding: 15px;
+  #mandateSelector {
+    width: 100%;
+    padding: 5px 10px;
   }
 }
 .institution-filter-container {
@@ -269,6 +277,9 @@ $color_lobby: #449188;
     margin-left: 10px;
     @media only screen and (max-width: 767px) {
       width: 200px;
+    }
+    @media only screen and (max-width: 500px) {
+      width: 75%;
     }
     i {
       vertical-align: middle;
@@ -356,6 +367,10 @@ $color_lobby: #449188;
       background: rgb(206, 74, 88);
       outline: none;
     }
+    @media only screen and (max-width: 500px) {
+      right: 20px;
+      top: 40px;
+    }
     .reset-btn-text {
       @media only screen and (max-width: 767px) {
         display: none;
@@ -376,6 +391,12 @@ $color_lobby: #449188;
     -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
           transform: translateY(-50%);
+    @media only screen and (max-width: 500px) {
+      position: relative;
+      width: 100%;
+      right: auto;
+      top: 10px;
+    }
     button {
       color: #fff;
       background: none;
@@ -639,7 +660,7 @@ table.dataTable tbody tr:hover {
 /* POPOVER */
 
 .popover {
-  background-color: $color_TI_darker;
+  background-color: darken( $color_TI, 10% );
   border: none;
   border-radius: 2px;
 }
@@ -811,7 +832,7 @@ table.dataTable tbody tr:hover {
 .tabA {
   .chart-table {
     td, th {
-      &:nth-child(3), &:nth-child(7), &:nth-child(8) {
+      &:nth-child(1), &:nth-child(3), &:nth-child(7), &:nth-child(8) {
         @media only screen and (max-width: 768px) {
           display: none;
         }
@@ -822,7 +843,7 @@ table.dataTable tbody tr:hover {
 .tabB {
   .chart-table {
     td, th {
-      &:nth-child(3), &:nth-child(4), &:nth-child(8), &:nth-child(9) {
+      &:nth-child(1), &:nth-child(3), &:nth-child(4), &:nth-child(8), &:nth-child(9) {
         @media only screen and (max-width: 768px) {
           display: none;
         }

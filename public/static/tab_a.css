@@ -421,13 +421,13 @@ div.dc-html-legend {
   height: auto;
 }
 .chart-container.tab_a_1 {
-  height: 500px;
+  height: 430px;
 }
 .chart-container.tab_a_2 {
-  height: 500px;
+  height: 430px;
 }
 .chart-container.tab_a_3 {
-  height: 620px;
+  height: 583px;
 }
 .chart-container.tab_a_4 {
   height: 600px;
@@ -436,10 +436,10 @@ div.dc-html-legend {
   height: 600px;
 }
 .chart-container.tab_a_6 {
-  height: 520px;
+  height: 545px;
 }
 .chart-container.tab_a_7 {
-  height: 520px;
+  height: 545px;
 }
 .chart-container.tab_b_1 {
   height: 505px;
@@ -472,6 +472,15 @@ div.dc-html-legend {
   .chart-container {
     height: auto !important;
   }
+}
+
+.mandate-selector-container {
+  width: 100%;
+  padding: 15px;
+}
+.mandate-selector-container #mandateSelector {
+  width: 100%;
+  padding: 5px 10px;
 }
 
 .institution-filter-container {
@@ -528,6 +537,11 @@ div.dc-html-legend {
 @media only screen and (max-width: 767px) {
   .footer-bar .footer-input {
     width: 200px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .footer-bar .footer-input {
+    width: 75%;
   }
 }
 .footer-bar .footer-input i {
@@ -622,6 +636,12 @@ div.dc-html-legend {
   background: #ce4a58;
   outline: none;
 }
+@media only screen and (max-width: 500px) {
+  .footer-bar .reset-btn {
+    right: 20px;
+    top: 40px;
+  }
+}
 @media only screen and (max-width: 767px) {
   .footer-bar .reset-btn .reset-btn-text {
     display: none;
@@ -643,6 +663,14 @@ div.dc-html-legend {
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+}
+@media only screen and (max-width: 500px) {
+  .footer-bar .footer-buttons-right {
+    position: relative;
+    width: 100%;
+    right: auto;
+    top: 10px;
+  }
 }
 .footer-bar .footer-buttons-right button {
   color: #fff;
@@ -902,7 +930,7 @@ table.dataTable tbody tr:hover {
 
 /* POPOVER */
 .popover {
-  background-color: #020c10;
+  background-color: #072e3e;
   border: none;
   border-radius: 2px;
 }
@@ -1066,13 +1094,13 @@ table.dataTable tbody tr:hover {
 
 /* Mobile tables */
 @media only screen and (max-width: 768px) {
-  .tabA .chart-table td:nth-child(3), .tabA .chart-table td:nth-child(7), .tabA .chart-table td:nth-child(8), .tabA .chart-table th:nth-child(3), .tabA .chart-table th:nth-child(7), .tabA .chart-table th:nth-child(8) {
+  .tabA .chart-table td:nth-child(1), .tabA .chart-table td:nth-child(3), .tabA .chart-table td:nth-child(7), .tabA .chart-table td:nth-child(8), .tabA .chart-table th:nth-child(1), .tabA .chart-table th:nth-child(3), .tabA .chart-table th:nth-child(7), .tabA .chart-table th:nth-child(8) {
     display: none;
   }
 }
 
 @media only screen and (max-width: 768px) {
-  .tabB .chart-table td:nth-child(3), .tabB .chart-table td:nth-child(4), .tabB .chart-table td:nth-child(8), .tabB .chart-table td:nth-child(9), .tabB .chart-table th:nth-child(3), .tabB .chart-table th:nth-child(4), .tabB .chart-table th:nth-child(8), .tabB .chart-table th:nth-child(9) {
+  .tabB .chart-table td:nth-child(1), .tabB .chart-table td:nth-child(3), .tabB .chart-table td:nth-child(4), .tabB .chart-table td:nth-child(8), .tabB .chart-table td:nth-child(9), .tabB .chart-table th:nth-child(1), .tabB .chart-table th:nth-child(3), .tabB .chart-table th:nth-child(4), .tabB .chart-table th:nth-child(8), .tabB .chart-table th:nth-child(9) {
     display: none;
   }
 }

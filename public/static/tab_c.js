@@ -46670,21 +46670,23 @@ exports.default = _default;
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "chart-header-buttons col-3" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary btn-info",
-          attrs: {
-            type: "button",
-            "data-container": "body",
-            "data-toggle": "popover",
-            "data-html": "true",
-            "data-placement": "bottom",
-            "data-content": _vm.info
-          }
-        },
-        [_vm._v("\n      i\n    ")]
-      )
+      _vm.info !== ""
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary btn-info",
+              attrs: {
+                type: "button",
+                "data-container": "body",
+                "data-toggle": "popover",
+                "data-html": "true",
+                "data-placement": "bottom",
+                "data-content": _vm.info
+              }
+            },
+            [_vm._v("\n      i\n    ")]
+          )
+        : _vm._e()
     ])
   ])
 }
@@ -46759,7 +46761,7 @@ window.underscore = _underscore.default;
 window._ = _underscore.default;
 // Data object - is also used by Vue
 var vuedata = {
-  page: 'tabB',
+  page: 'tabC',
   loader: true,
   readMore: false,
   showInfo: true,
@@ -46997,6 +46999,11 @@ var lobbyist_typeList = {};
   //Loop through data to aply fixes and calculations
   _.each(entries, function (d) {
     d.Organizacija = d.Organizacija.charAt(0).toUpperCase() + d.Organizacija.slice(1).toLowerCase();
+    d.Organizacija = d.Organizacija.replace("republike slovenije", "Republike Slovenije");
+    d.Organizacija = d.Organizacija.replace("vlade republike slovenije", "Vlade Republike Slovenije");
+    d.Organizacija = d.Organizacija.replace("Svrk", "Služba vlade za razvoj in kohezijsko evropsko kohezijsko politiko");
+    d.Organizacija = d.Organizacija.replace("Urad vlade rs za slovence v zamejstvu in po svetu", "Urad vlade za Slovence v zamejstvu in po svetu");
+    d.Organizacija = d.Organizacija.replace("9999-12-30", "Do preklica");
   }); //Set dc main vars. The second crossfilter is used to handle the travels stacked bar chart.
 
 
@@ -47146,6 +47153,10 @@ var lobbyist_typeList = {};
         "targets": 5,
         "defaultContent": "N/A",
         "data": function data(d) {
+          if (d.Velja_do == "9999-12-30") {
+            return "Do preklica";
+          }
+
           return d.Velja_do;
         }
       }, {
@@ -47292,7 +47303,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50263" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51291" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

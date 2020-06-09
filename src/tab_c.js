@@ -25,7 +25,7 @@ import ChartHeader from './components/ChartHeader.vue';
 // Data object - is also used by Vue
 
 var vuedata = {
-  page: 'tabB',
+  page: 'tabC',
   loader: true,
   readMore: false,
   showInfo: true,
@@ -251,6 +251,12 @@ csv('./data/tab_c/business_limitations.csv?' + randomPar, (err, entries) => {
   //Loop through data to aply fixes and calculations
   _.each(entries, function (d) {
     d.Organizacija = d.Organizacija.charAt(0).toUpperCase() + d.Organizacija.slice(1).toLowerCase();
+    d.Organizacija = d.Organizacija.replace("republike slovenije", "Republike Slovenije");
+    d.Organizacija = d.Organizacija.replace("vlade republike slovenije", "Vlade Republike Slovenije");
+    d.Organizacija = d.Organizacija.replace("Svrk", "Služba vlade za razvoj in kohezijsko evropsko kohezijsko politiko");
+    d.Organizacija = d.Organizacija.replace("Urad vlade rs za slovence v zamejstvu in po svetu", "Urad vlade za Slovence v zamejstvu in po svetu");
+    d.Organizacija = d.Organizacija.replace("9999-12-30", "Do preklica");
+    
   });
 
   //Set dc main vars. The second crossfilter is used to handle the travels stacked bar chart.
@@ -424,6 +430,9 @@ csv('./data/tab_c/business_limitations.csv?' + randomPar, (err, entries) => {
           "targets": 5,
           "defaultContent":"N/A",
           "data": function(d) {
+            if(d.Velja_do == "9999-12-30") {
+              return "Do preklica";
+            }
             return d.Velja_do;
           }
         },

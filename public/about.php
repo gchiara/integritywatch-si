@@ -20,14 +20,14 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <h1 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">1. O SPLETNI STRANI</a>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">1. O spletni strani</a>
               </h1>
             </div>
             <div id="collapse1" class="panel-collapse collapse in">
               <div class="panel-body">
               <p>Na tej strani je dom spletnih orodij Varuh integritete. S pomočjo teh orodij lahko civilna družba na podlagi javno dostopnih podatkov dobi dodaten vpogled v vplive na odločitve, ki jih sprejemajo politiki v Sloveniji. S tem namenom smo podatke, ki so pogosto razpršeni ali težje berljivi, zbrali, prečistili in jih s pomočjo grafičnih upodobitev naredili bolj uporabne. Z orodji lahko državljani iščejo, razvrščajo in izločajo podatke na preprost način. S tem spletna stran Varuh integritete prispeva k povečanju transparentnosti in krepitvi integritete ter izboljšanemu dostopu do postopkov odločanja in nadzorovanju državnih ustanov zaradi morebitnih nasprotij interesov in neprimernega vpliva. Orodja Varuh integritete smo zasnovali tako zaradi ozaveščanja javnosti o potrebi po ločevanju med legalnimi in legitimnimi ter nezakonitimi in neetičnimi oblikami vplivanja na odločitve, ki jih sprejemajo politiki, kot potrebe po ozaveščanju teh odločevalcev, da skladno z zakonodajo dosledno poročajo o lobističnih stikih in zavračajo vse poskuse neetičnega vplivanja. Namen orodij Varuh integritete je njihova uporaba pri nastajanju novinarskih prispevkov in zgodb s področja politične integritete in s tem tako krepitev politične integritete odločevalcev kot boljša obveščena javnosti o vplivih na postopke odločanja.</p>
               <p>Spletna stran Varuh integritete je nastala po vzoru spletne strani <a href="https://www.integritywatch.eu/" target="_blank">Integrity Watch EU</a> z orodji za vizualizacijo podatkov evropskih institucij. Tehnologijo, na kateri temelji spletna strani (<a href="http://d3js.org/" target="_blank">D3.js</a>), je razvil časnik New York Times, da bi čim širšemu krogu ljudi omogočil dostop do zapletenih in večplastnih zbirk podatkov s pomočjo vizualizacije.</p> 
-              <p>Spletna stran Varuh integritete podpira načela odprte programske kode in podatkov, zato lahko uporabniki prenašajo vse zbirke podatkov na njej. Zbirke podatkov, ki jih uporablja spletna stran Varuh integritete, so pridobljene izključno od javnih organov in z uradnih spletnih strani Republike Slovenije. Več o metodologiji preberite tu.  Transparency International Slovenia ne prevzema nobene odgovornosti za pravilnost teh zbirk.</p>
+              <p>Spletna stran Varuh integritete podpira načela odprte programske kode in podatkov, zato lahko uporabniki prenašajo vse zbirke podatkov na njej. Zbirke podatkov, ki jih uporablja spletna stran Varuh integritete, so pridobljene izključno od javnih organov in z uradnih spletnih strani Republike Slovenije. Transparency International Slovenia ne prevzema nobene odgovornosti za pravilnost teh zbirk.</p>
               <p>Na strani Varuh integritete so trenutno na voljo vizualizacije za</p> 
               <ul>
               <li>podatke o lobističnih stikih vlade;</li>
@@ -38,7 +38,8 @@
               <p>Podatki o omejitvah poslovanja Državnega zbora, Državnega sveta, ministrstev brez organov v sestavi in vladnih služb Kabineta predsednika vlade, Generalnega sekretariata vlade, Službe vlade za razvoj in kohezijo in Urada za Slovence v zamejstvu in svetu omogočajo razvrščanje in vizualne primerjave. Orodje omogoča prepoznavo organov/organizacij z nadpovprečno visokim ali nizkim številom vpisanih omejitev, pregled vpisanih omejitev glede na subjekt, pregled omejitev poslovanja glede na njihovo trajanje in število transakcij v času, ko je veljala omejitev.</p>
               <p>Pri vzpostavitvi spletne strani Varuh integritete je Transparency International Slovenia sodeloval z mednarodnim sekretariatom Transparency International in Transparency International EU v sklopu projekta Integrity Watch Europe, ki ga sofinancira Evropska unija iz Sklada za notranjo varnost.</p>
               <p><strong>Več informacij o Transparency International Slovenia:</strong></p> 
-              <p><a href="https://www.transparency.si/" target="_blank">Transparency International Slovenia</a> je neodvisna, nevladna in nepridobitna organizacija s statusom v javnem interesu. Od leta 2009 smo del mednarodne mreže nevladnih organizacij za boj proti korupciji Transparency International. Transparency International Slovenia je nepolitična organizacija. Sami si izbiramo področja dela in določamo program in aktivnosti. Donatorji nimajo vpliva na vsebino in politiko dela TI Slovenia. Naši viri financiranja in poraba sredstev so <a href="http://transparency.si/transparentnost-financnega-poslovanja" target="_blank">pregledni</a>.</p>
+              <p><a href="https://www.transparency.si/" target="_blank">Transparency International Slovenia</a> je neodvisna, nevladna in nepridobitna organizacija s statusom v javnem interesu. Od leta 2009 smo del mednarodne mreže nevladnih organizacij za boj proti korupciji Transparency International.</p>
+              <p>Transparency International Slovenia namen in cilje svojega delovanja uresničuje z razvojem in izvajanjem preventivnih programov za ozaveščanje splošne in strokovne javnosti o potrebah in pogojih razvoja visoke ravni integritete v družbi, objektivnim ugotavljanjem dejanskega stanja na področju etike, integritete in korupcije v Republiki Sloveniji, zagotavljanjem strokovnih podlag in nasvetov fizičnim ter pravnim osebam pri vzpostavitvi mehanizmov integritete v njihovem ožjem in širšem okolju, s preprečevanjem korupcije, krepitvijo preglednosti in učinkovitosti javnega ter zasebnega sektorja, še posebej pa z nudenjem pomoči žrtvam korupcije, vzpodbujanjem in organiziranjem njihovega sodelovanja z organi preprečevanja, odkrivanja in pregona korupcijske kriminalitete ter pomoči pri varstvu prič s tega področja.</p>
                 <div class="about-eu-funding">
                   <img class="logo" src="./images/flag_yellow_low.jpg" />
                   <p style="font-family: Arial">To spletno stran je sofinancirala Evropska unija iz Sklada za notranjo varnost.</p>
@@ -104,24 +105,9 @@
             </div>
             <div id="collapse4" class="panel-collapse collapse in">
               <div class="panel-body">
-                <p>Več o Varuhu integritete in projektu Integrity Watch si lahko preberete v Poročilu o stanju odprtih podatkov na področju zagotavljanja politične integritete v Sloveniji.</p>
                 <p>Več o lobiranju lahko preberete tudi v <a href="https://www.transparency.si/images/publikacije/lobiranje/porocilo_lobiranjevsloveniji.pdf" target="_blank">poročilu</a> Lobiranje v Sloveniji (Transparency International Slovenia, 2014, podnaslov: Poziv k transparentnemu in etičnemu lobiranju). Iz povzetka poročila:</p>
-                <p><i>»Lobiranje je sestavni del demokracije, saj oblikovalcem politik nudi pomembne informacije in strokovna mnenja o kompleksnih zadevah ter ve<br />
-                jo možnost sodelovanja pri odlo<br />
-                itvah tistim deležnikom, na katere te odlo<br />
-                itve vplivajo. Pri lobiranju pogosto prihaja tudi do navzkrižja interesov oziroma velikega tveganja za korupcijo in druga nezakonita ali neeti<br />
-                na ravnanja. Če lobiranje ni dobro zakonsko regulirano in se lobira prikrito, lahko vodi do nedovoljenega, škodljivega vpliva dolo<br />
-                enih interesov in pristranskih odlo<br />
-                itev, ki ne sledijo javnemu interesu.</i></p> 
-                <p><i>Sistem ne omogo<br />
-                a zadostne transparentnosti lobisti<br />
-                nih stikov in premalo izkoriš<br />
-                a informacijsko tehnologijo, ki bi pove<br />
-                ala u<br />
-                inkovitost nadzora in preverjanje lobiranja. Lobisti<br />
-                ni stiki se ne razkrivajo proaktivno v strojno berljivem formatu. Register in sistem poro<br />
-                anja teh stikov sicer obstajata, vendar je transparentnost na vseh ravneh postopkov odlo<br />
-                anja še vedno nezadostna, tako pri pripravi kot pri sprejemanju predpisov na državni in lokalni ravni.«</i></p>
+                <p><i>»Lobiranje je sestavni del demokracije, saj oblikovalcem politik nudi pomembne informacije in strokovna mnenja o kompleksnih zadevah ter večjo možnost sodelovanja pri odločitvah tistim deležnikom, na katere te odločitve vplivajo. Pri lobiranju pogosto prihaja tudi do navzkrižja interesov oziroma velikega tveganja za korupcijo in druga nezakonita ali neetična ravnanja. Če lobiranje ni dobro zakonsko regulirano in se lobira prikrito, lahko vodi do nedovoljenega, škodljivega vpliva določenih interesov in pristranskih odločitev, ki ne sledijo javnemu interesu.</i></p> 
+                <p><i>Sistem ne omogoča zadostne transparentnosti lobističnih stikov in premalo izkorišča informacijsko tehnologijo, ki bi povečala učinkovitost nadzora in preverjanje lobiranja. Lobistični stiki se ne razkrivajo proaktivno v strojno berljivem formatu. Register in sistem poročanja teh stikov sicer obstajata, vendar je transparentnost na vseh ravneh postopkov odločanja še vedno nezadostna, tako pri pripravi kot pri sprejemanju predpisov na državni in lokalni ravni.«</i></p>
                 <p>Oglejte si <a href="https://www.youtube.com/watch?v=dVHpcf1j9VA" target="_blank">posnetek</a> <strong>Kdo vpliva? Imaš pravico vedeti!</strong></p>
               </div>
             </div>

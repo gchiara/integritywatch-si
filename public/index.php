@@ -26,7 +26,7 @@
                   <h1>Varuh integritete – Lobistični stiki vlade</h1>
                   <p>To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled poročanih lobističnih stikov Vlade Republike Slovenije. <a href="#" @click="readMore = true">Preberi več</a>.</p>
                   <p v-show="readMore">
-                    Upoštevani so poročani lobistični stiki Kabineta predsednika Vlade Republike Slovenije, Generalnega sekretariata Vlade Republike Slovenije, vseh ministrstev brez organov v sestavi in Službe Vlade Republike Slovenije za razvoj in evropsko kohezijsko politiko ter Urada vlade za Slovence v zamejstvu in po svetu.<br />
+                    Upoštevani so poročani lobistični stiki Kabineta predsednika Vlade Republike Slovenije, Generalnega sekretariata Vlade Republike Slovenije, vseh ministrstev brez organov v sestavi in Službe Vlade Republike Slovenije za razvoj in evropsko kohezijsko politiko ter Urada vlade za Slovence v zamejstvu in po svetu.<br /><br />
                     S preprostim klikom na pasice, grafe ali sezname spodaj lahko uporabniki razvrščajo in filtrirajo podatke o poročanih lobističnih stikih vladnih institucij v času različnih vlad.
                   </p>  
                   <i class="material-icons close-btn" @click="showInfo = false">close</i>
@@ -38,7 +38,19 @@
           <div class="col-md-6 chart-subrow">
             <div class="row chart-subrow-row">
               <div class="col-md-12 subrow-title-container">
-                <div class="subrow-title">DRŽAVNE USTANOVE</div>
+                <div class="subrow-title">VLADA</div>
+              </div>
+              <div class="col-md-12 chart-col">
+                <div class="boxed-container chart-container tab_a_0">
+                  <chart-header :title="charts.mandateSelector.title" :info="charts.mandateSelector.info" ></chart-header>
+                  <div class="mandate-selector-container">
+                    <select id="mandateSelector" v-model="selectedMandate">
+                      <option value="all" selected="selected">Vse</option>
+                      <option value="m13">13. vlada Republike Slovenije</option>
+                      <option value="m14">14. vlada Republike Slovenije</option>
+                    </select>
+                  </div>
+                </div>
               </div>
               <div class="col-md-6 chart-col">
                 <div class="boxed-container chart-container tab_a_1">
@@ -101,11 +113,11 @@
                 <table class="table table-hover dc-data-table" id="dc-data-table">
                   <thead>
                     <tr class="header">
-                      <th class="header">Nr</th> 
-                      <th class="header">Zap. Št.</th>
-                      <th class="header">Funkcija/Položaj Lobiranca</th>
+                      <th class="header">Št. stika</th>
+                      <th class="header">Funkcija/položaj lobiranca</th>
                       <th class="header">Institucija</th>
                       <th class="header">Datum</th>
+                      <th class="header">Način lobiranja</th>
                       <th class="header">Organizacija</th> 
                       <th class="header">Status lobista</th>
                       <th class="header">Namen in cilj lobiranja</th> 
@@ -142,7 +154,7 @@
                     <div class="details-title details-title-right">LOBIST</div>
                     <div class="details-line"><span class="details-line-title">Organizacija:</span> {{ selectedElement.org_name }}</div>
                     <div class="details-line"><span class="details-line-title">Statusi lobista:</span> {{ selectedElement.lobbyist_type }}</div>
-                    <div class="details-line"><span class="details-line-title">Namen in cilj lobirankja:</span> {{ selectedElement.purpose }}</div>
+                    <div class="details-line"><span class="details-line-title">Namen in cilj lobiranja:</span> {{ selectedElement.purpose }}</div>
                     <div class="details-line"><span class="details-line-title">Skupno število lobističnih stikov:</span> {{ orgEntries[selectedElement.org_name] }}</div>
                     <div class="details-line" v-if="selectedElement.purpose && selectedElement.purpose.length > 0"><span class="details-line-title">Dodatne informacije o namenu srečanja lobiranja:</span> {{ selectedElement.purpose }} </div>
                     <div class="details-line" v-else><span class="details-line-title">Dodatne informacije o namenu srečanja lobiranja:</span> Dodatne informacije niso na voljo</div>
@@ -168,7 +180,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     Dragi uporabnik/-ca,<br /><br />
-                    orodje Varuh integritete se trenutno posodablja. Stran s posodobljenimi podatki bo v kratkem na voljo.<br /><br /> 
+                    orodja Varuh integritete se trenutno posodabljajo. Stran s posodobljenimi podatki bo v kratkem na voljo.<br /><br /> 
                     Transparency International Slovenia
                   </div>
                 </div>
@@ -180,7 +192,7 @@
       <!-- Bottom bar -->
       <div class="container-fluid footer-bar">
         <div class="row">
-          <div class="footer-col col-12 col-sm-12 footer-counts">
+          <div class="footer-col col-12 col-sm-8 footer-counts">
             <div class="dc-data-count count-box">
               <div class="filter-count">0</div>od <strong class="total-count">0</strong> stikov
             </div>

@@ -26,7 +26,7 @@
                   <h1>Varuh integritete – Omejitve poslovanja</h1>
                   <p>To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled evidence subjektov, s katerimi veljajo omejitve poslovanja. <a href="#" @click="readMore = true">Preberi več</a>.</p>
                   <p v-show="readMore">
-                    Seznam subjektov, s katerimi veljajo omejitve poslovanja, vsebuje podatke, ki jih Komisija za preprečevanje korupcije prejme od organizacij javnega sektorja. Tem morajo funkcionarji v mesecu dni po nastopu funkcije sporočiti podatke o povezanih subjektih, morebitne spremembe pa v osmih dneh od nastanka. Organi so dolžni prejete podatke sporočiti Komisiji za preprečevanje korupcije v 15 dneh od prejema.<br /> 
+                    Seznam subjektov, s katerimi veljajo omejitve poslovanja, vsebuje podatke, ki jih Komisija za preprečevanje korupcije prejme od organizacij javnega sektorja. Tem morajo funkcionarji v mesecu dni po nastopu funkcije sporočiti podatke o povezanih subjektih, morebitne spremembe pa v osmih dneh od nastanka. Organi so dolžni prejete podatke sporočiti Komisiji za preprečevanje korupcije v 15 dneh od prejema.<br /><br /> 
                     Omejitve poslovanja veljajo po Zakonu o integriteti in preprečevanju korupcije od trenutka, ko nastanejo in veljajo ne glede na to,  ali so vpisane na seznam. 
                   </p>  
                   <i class="material-icons close-btn" @click="showInfo = false">close</i>
