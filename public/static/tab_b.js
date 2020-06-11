@@ -47032,13 +47032,9 @@ function addcommas(x) {
 } //Custom date order for dataTables
 
 
-var dmy = d3.timeParse("%d/%m/%Y");
+var dmy = d3.timeParse("%d-%m-%Y");
 jQuery.extend(jQuery.fn.dataTableExt.oSort, {
   "date-eu-pre": function dateEuPre(date) {
-    if (date.indexOf("Cancelled") > -1) {
-      date = date.split(" ")[0];
-    }
-
     return dmy(date);
   },
   "date-eu-asc": function dateEuAsc(a, b) {
@@ -47081,14 +47077,30 @@ for (var i = 0; i < 5; i++) {
     d.institution_lowerCase = d.institution_lowerCase.charAt(0).toUpperCase() + d.institution_lowerCase.slice(1);
     d.institution_lowerCase = d.institution_lowerCase.replace("republike slovenije", "Republike Slovenije"); //Streamline Purpose
 
-    d.purposeStreamlined = vuedata.purposeCategories[d.purpose.toLowerCase()];
-  }); //Set dc main vars. The second crossfilter is used to handle the travels stacked bar chart.
+    d.purposeStreamlined = vuedata.purposeCategories[d.purpose.toLowerCase()]; //Date format
 
+    if (d.date) {
+      var splitdate = d.date.split('-');
+      d.dateToInt = splitdate[0] + splitdate[1] + splitdate[2];
+      d.dateToInt = parseInt(d.dateToInt);
+      d.date = splitdate[2] + '-' + splitdate[1] + '-' + splitdate[0];
+    }
+  }); //Filter data with cutoff date 22.6.2018
+
+
+  contacts = _.filter(contacts, function (d, index) {
+    return d.dateToInt >= 20180622;
+  }); //Set dc main vars. The second crossfilter is used to handle the travels stacked bar chart.
 
   var ndx = crossfilter(contacts);
   var searchDimension = ndx.dimension(function (d) {
-    var entryString = ' ' + d.institution.toLowerCase();
+    //var entryString = ' ' + d.institution.toLowerCase();
+    var entryString = d.function + ' ' + d.party + ' ' + d.institution + ' ' + d.contact_type + ' ' + d.org_name + ' ' + d.lobbyist_type + ' ' + d.purpose + ' ' + d.purpose_details;
     return entryString.toLowerCase();
+  });
+  var institutionDimension = ndx.dimension(function (d) {
+    var institution = d.institution.toLowerCase();
+    return institution.toLowerCase();
   }); //CHART 1
 
   var createPartyChart = function createPartyChart() {
@@ -47363,6 +47375,7 @@ for (var i = 0; i < 5; i++) {
         "orderable": true,
         "targets": 4,
         "defaultContent": "N/A",
+        "type": "date-eu",
         "data": function data(d) {
           return d.date;
         }
@@ -47480,7 +47493,7 @@ for (var i = 0; i < 5; i++) {
       vuedata.instFilter = 'all';
     }
 
-    searchDimension.filter(function (d) {
+    institutionDimension.filter(function (d) {
       if (filter == 'all') {
         return true;
       } else {
@@ -47498,6 +47511,7 @@ for (var i = 0; i < 5; i++) {
     }
 
     searchDimension.filter(null);
+    institutionDimension.filter(null);
     $('#search-input').val('');
     $('.institution-filter-btn.inst2').click();
     dc.redrawAll();
@@ -47652,7 +47666,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51291" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53709" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

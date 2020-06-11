@@ -305,12 +305,9 @@ function addcommas(x){
   return x;
 }
 //Custom date order for dataTables
-var dmy = d3.timeParse("%d/%m/%Y");
+var dmy = d3.timeParse("%d-%m-%Y");
 jQuery.extend( jQuery.fn.dataTableExt.oSort, {
   "date-eu-pre": function (date) {
-    if(date.indexOf("Cancelled") > -1){
-      date = date.split(" ")[0];
-    }
       return dmy(date);
   },
   "date-eu-asc": function ( a, b ) {
@@ -367,20 +364,8 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
       console.log(d);
     }
     
-    //Split Lobbyist type into array
-    /*
-    d.lobbyist_type_list = [];
-    _.each(d.lobbyist_type.split(','), function (l) {
-      l = l.trim();
-      l = vuedata.lobbyistTypeCategories[l];
-      d.lobbyist_type_list.push(l);
-      if(lobbyist_typeList[l]) {
-        lobbyist_typeList[l] ++;
-      } else {
-        lobbyist_typeList[l] = 1;
-      }
-    });
-    */
+    //Change date format and get int version for filtering
+
     d.dateToInt = null;
     if(d.date) {
       /*
@@ -390,6 +375,7 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
       var splitdate = d.date.split('-');
       d.dateToInt = splitdate[0] + splitdate[1] + splitdate[2];
       d.dateToInt = parseInt(d.dateToInt);
+      d.date = splitdate[2] + '-' + splitdate[1] + '-' + splitdate[0];
     } else {
       console.log(d);
     }
@@ -704,6 +690,7 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
           "orderable": true,
           "targets": 3,
           "defaultContent":"N/A",
+          "type": "date-eu",
           "data": function(d) {
             return d.date;
           }

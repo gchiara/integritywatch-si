@@ -134,20 +134,20 @@
               <div class="container">
                 <div class="row">
                   <div class="col-md-6 details-left">
-                    <div class="details-title details-title-left">JAVNI ORGAN</div>
+                    <div class="details-title details-title-left">JAVNA INSTITUCIJA</div>
                     <div class="details-line"><span class="details-line-title">Institucija:</span> {{ selectedElement.institution }}</div>
-                    <div class="details-line"><span class="details-line-title">Politična stranka:</span> {{ selectedElement.party }}</div>
-                    <div class="details-line"><span class="details-line-title">Funkcija/Položaj Lobiranca:</span> {{ selectedElement.function }}</div>
-                    <div class="details-line"><span class="details-line-title">Skupno število lobističnih stikov:</span> {{ institutionEntries[selectedElement.institution] }}</div>
+                    <div class="details-line"><span class="details-line-title">Poslanska/interesna skupina:</span> {{ selectedElement.party }}</div>
+                    <div class="details-line"><span class="details-line-title">Funkcija/položaj lobiranca:</span> {{ selectedElement.function }}</div>
+                    <div class="details-line"><span class="details-line-title">Skupno število poročanih lobističnih stikov:</span> {{ institutionEntries[selectedElement.institution] }}</div>
                   </div>
                   <div class="col-md-6 details-right">
                     <div class="details-title details-title-right">LOBIST</div>
                     <div class="details-line"><span class="details-line-title">Organizacija:</span> {{ selectedElement.org_name }}</div>
-                    <div class="details-line"><span class="details-line-title">Statusi lobista:</span> {{ selectedElement.lobbyist_type }}</div>
+                    <div class="details-line"><span class="details-line-title">Status lobista:</span> {{ selectedElement.lobbyist_type }}</div>
                     <div class="details-line"><span class="details-line-title">Namen in cilj lobiranja:</span> {{ selectedElement.purpose }}</div>
-                    <div class="details-line"><span class="details-line-title">Skupno število lobističnih stikov:</span> {{ orgEntries[selectedElement.org_name] }}</div>
-                    <div class="details-line" v-if="selectedElement.purpose && selectedElement.purpose.length > 0"><span class="details-line-title">Dodatne informacije o namenu srečanja lobiranja:</span> {{ selectedElement.purpose_details }} </div>
-                    <div class="details-line" v-else><span class="details-line-title">Dodatne informacije o namenu srečanja lobiranja:</span> Dodatne informacije niso na voljo</div>
+                    <div class="details-line"><span class="details-line-title">Skupno število poročanih lobističnih stiko:</span> {{ orgEntries[selectedElement.org_name] }}</div>
+                    <div class="details-line" v-if="selectedElement.purpose && selectedElement.purpose.length > 0"><span class="details-line-title">Podrobnejši podatki o namenu in cilju lobiranja:</span> {{ selectedElement.purpose_details }} </div>
+                    <div class="details-line" v-else><span class="details-line-title">Podrobnejši podatki o namenu in cilju lobiranja:</span> Dodatne informacije niso na voljo</div>
                   </div>
                 </div>
               </div>
