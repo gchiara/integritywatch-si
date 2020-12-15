@@ -46787,7 +46787,7 @@ var vuedata = {
       info: 'Diagram prikazuje porazdelitev poročanih lobističnih stikov vlade z lobisti glede na njihov status.'
     },
     institutionTypeRow: {
-      title: 'Lobistični stiki vlade po resorjih',
+      title: 'Lobistični stiki vlade po institucijah',
       info: 'Prikaz razdelitve poročanih lobističnih stikov po področjih oziroma vladnih institucijah. Vključeni so ministrstva brez organov v sestavi, kabinet predsednika vlade in generalni sekretariat vlade.'
     },
     officialType: {
@@ -46846,9 +46846,9 @@ var vuedata = {
     },
     default2: "#449188",
     lobbyistType: {
-      "Izvoljeni predstavnik organizacije": "#449188",
+      "Izvoljeni predstavnik": "#449188",
       "Registrirani lobist": "#41ab9f",
-      "Zakoniti zastopnik organizacije": "#39c0b0",
+      "Zakoniti zastopnik": "#39c0b0",
       "Zaposlen v organizaciji": "#30cfbd"
     },
 
@@ -46890,7 +46890,7 @@ new _vue.default({
     share: function share(platform) {
       if (platform == 'twitter') {
         var thisPage = window.location.href.split('?')[0];
-        var shareText = 'Share text here ' + thisPage;
+        var shareText = 'Kdo lobira pri vladi? Katere vladne institucije so poročale o največ lobističnih stikih? Odkrijte na spletni strani @TransparencySi #VaruhIntegritete ' + thisPage;
         var shareURL = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
         window.open(shareURL, '_blank');
         return;
@@ -47237,7 +47237,6 @@ for (var i = 0; i < 5; i++) {
       bottom: 20
     }).group(filteredGroup).dimension(dimension).colorCalculator(function (d, i) {
       var type = getLobbyistType(d.key);
-      console.log(type);
       return vuedata.colors.lobbyistType[type];
     }).label(function (d) {
       if (d.key && d.key.length > charsLength) {
@@ -47651,9 +47650,8 @@ for (var i = 0; i < 5; i++) {
   window.onresize = function (event) {
     resizeGraphs();
   }; //Show disclaimer modal
+  //$('#disclaimerModal').modal();
 
-
-  $('#disclaimerModal').modal();
 });
 },{"jquery":"../node_modules/jquery/dist/jquery.js","datatables.net":"../node_modules/datatables.net/js/jquery.dataTables.js","datatables.net-dt":"../node_modules/datatables.net-dt/js/dataTables.dataTables.js","underscore":"../node_modules/underscore/underscore.js","../public/vendor/js/popper.min.js":"../public/vendor/js/popper.min.js","../public/vendor/js/bootstrap.min.js":"../public/vendor/js/bootstrap.min.js","d3-request":"../node_modules/d3-request/index.js","../public/vendor/css/bootstrap.min.css":"../public/vendor/css/bootstrap.min.css","../public/vendor/css/dc.css":"../public/vendor/css/dc.css","/scss/main.scss":"scss/main.scss","vue":"../node_modules/vue/dist/vue.esm.js","./components/Loader.vue":"components/Loader.vue","./components/ChartHeader.vue":"components/ChartHeader.vue"}],"C:/Users/ElaineG/AppData/Local/Yarn/config/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -47683,7 +47681,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53709" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52074" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

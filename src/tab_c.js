@@ -87,7 +87,7 @@ new Vue({
     share: function (platform) {
       if(platform == 'twitter'){
         var thisPage = window.location.href.split('?')[0];
-        var shareText = 'Share text here ' + thisPage;
+        var shareText = 'Za katere institucije vlade in parlamenta veljajo omejitve poslovanja zaradi zasebnih interesov funkcionarjev? Odkrijte na spletni strani @TransparencySi #VaruhIntegritete ' + thisPage;
         var shareURL = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
         window.open(shareURL, '_blank');
         return;

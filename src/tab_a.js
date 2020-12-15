@@ -51,7 +51,7 @@ var vuedata = {
       info: 'Diagram prikazuje porazdelitev poročanih lobističnih stikov vlade z lobisti glede na njihov status.'
     },
     institutionTypeRow: {
-      title: 'Lobistični stiki vlade po resorjih',
+      title: 'Lobistični stiki vlade po institucijah',
       info: 'Prikaz razdelitve poročanih lobističnih stikov po področjih oziroma vladnih institucijah. Vključeni so ministrstva brez organov v sestavi, kabinet predsednika vlade in generalni sekretariat vlade.'
     },
     officialType: {
@@ -107,9 +107,9 @@ var vuedata = {
     },
     default2: "#449188",
     lobbyistType: {
-      "Izvoljeni predstavnik organizacije": "#449188",
+      "Izvoljeni predstavnik": "#449188",
       "Registrirani lobist": "#41ab9f",
-      "Zakoniti zastopnik organizacije": "#39c0b0",
+      "Zakoniti zastopnik": "#39c0b0",
       "Zaposlen v organizaciji": "#30cfbd",
     },
     /*
@@ -152,7 +152,7 @@ new Vue({
     share: function (platform) {
       if(platform == 'twitter'){
         var thisPage = window.location.href.split('?')[0];
-        var shareText = 'Share text here ' + thisPage;
+        var shareText = 'Kdo lobira pri vladi? Katere vladne institucije so poročale o največ lobističnih stikih? Odkrijte na spletni strani @TransparencySi #VaruhIntegritete ' + thisPage;
         var shareURL = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
         window.open(shareURL, '_blank');
         return;
@@ -495,7 +495,6 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
       .dimension(dimension)
       .colorCalculator(function(d, i) {
         var type = getLobbyistType(d.key);
-        console.log(type);
         return vuedata.colors.lobbyistType[type];
       })
       .label(function (d) {
@@ -949,5 +948,5 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
   };
   
   //Show disclaimer modal
-  $('#disclaimerModal').modal();
+  //$('#disclaimerModal').modal();
 })

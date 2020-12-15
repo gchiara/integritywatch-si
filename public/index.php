@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>IW SI</title>
+    <title>Varuh integritete – Lobistični stiki vlade</title>
     <!-- Add twitter and og meta here -->
     <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet">
     <link rel="stylesheet" href="static/tab_a.css">
+    <meta property="og:title" content="Varuh integritete – Lobistični stiki vlade" />
+    <meta property="og:description" content="To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled poročanih lobističnih stikov Vlade Republike Slovenije." />
 </head>
 <body>
     <div id="app" class="tabA">   

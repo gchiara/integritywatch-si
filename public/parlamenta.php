@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>IW SI</title>
+    <title>Varuh integritete – Lobistični stiki parlamenta</title>
     <!-- Add twitter and og meta here -->
     <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet">
     <link rel="stylesheet" href="static/tab_b.css">
+    <meta property="og:title" content="Varuh integritete – Lobistični stiki parlamenta" />
+    <meta property="og:description" content="To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled poročanih lobističnih stikov Vlade Republike Slovenije." />
 </head>
 <body>
     <div id="app" class="tabB">   
@@ -145,7 +147,7 @@
                     <div class="details-line"><span class="details-line-title">Organizacija:</span> {{ selectedElement.org_name }}</div>
                     <div class="details-line"><span class="details-line-title">Status lobista:</span> {{ selectedElement.lobbyist_type }}</div>
                     <div class="details-line"><span class="details-line-title">Namen in cilj lobiranja:</span> {{ selectedElement.purpose }}</div>
-                    <div class="details-line"><span class="details-line-title">Skupno število poročanih lobističnih stiko:</span> {{ orgEntries[selectedElement.org_name] }}</div>
+                    <div class="details-line"><span class="details-line-title">Skupno število poročanih lobističnih stikov:</span> {{ orgEntries[selectedElement.org_name] }}</div>
                     <div class="details-line" v-if="selectedElement.purpose && selectedElement.purpose.length > 0"><span class="details-line-title">Podrobnejši podatki o namenu in cilju lobiranja:</span> {{ selectedElement.purpose_details }} </div>
                     <div class="details-line" v-else><span class="details-line-title">Podrobnejši podatki o namenu in cilju lobiranja:</span> Dodatne informacije niso na voljo</div>
                   </div>

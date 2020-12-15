@@ -46827,9 +46827,9 @@ var vuedata = {
     },
     default2: "#449188",
     lobbyistType: {
-      "Izvoljeni predstavnik organizacije": "#449188",
+      "Izvoljeni predstavnik": "#449188",
       "Registrirani lobist": "#41ab9f",
-      "Zakoniti zastopnik organizacije": "#39c0b0",
+      "Zakoniti zastopnik": "#39c0b0",
       "Zaposlen v organizaciji": "#30cfbd"
     },
 
@@ -46877,7 +46877,7 @@ new _vue.default({
     share: function share(platform) {
       if (platform == 'twitter') {
         var thisPage = window.location.href.split('?')[0];
-        var shareText = 'Share text here ' + thisPage;
+        var shareText = 'Kdo lobira v parlamentu? Katere poslanske skupine so poročale o največ lobističnih stikih? Odkrijte na spletni strani @TransparencySi #VaruhIntegritete ' + thisPage;
         var shareURL = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
         window.open(shareURL, '_blank');
         return;
@@ -47666,7 +47666,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53709" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52074" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
