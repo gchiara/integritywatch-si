@@ -76,7 +76,7 @@ var vuedata = {
   executiveCategories: {
     "generalni sekretariat vlade republike slovenije": "Generalni sekretariat vlade",
     "kabinet predsednika vlade republike slovenije": "Kabinet predsednika vlade",
-    "služba vlade republike slovenije za razvoj in evropsko kohezijsko politiko": "Generalni sekretariat vlade"
+    "služba vlade republike slovenije za razvoj in evropsko kohezijsko politiko": "Ministrstva"
   },
   lobbyistTypeCategories: {
     "Lobist je izvoljeni predstavnik interesne organizacije za katero lobira": "Izvoljeni predstavnik interesne organizacije",

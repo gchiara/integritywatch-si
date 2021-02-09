@@ -19,11 +19,16 @@
           Druge različice
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="https://www.integritywatch.eu/" target="_blank">Evropska unija</a>
-          <a class="dropdown-item" href="https://www.integritywatch.fr/" target="_blank">Francija</a>
-          <a class="dropdown-item" href="https://openaccess.transparency.org.uk/" target="_blank">Velika Britanija</a>
-          <a class="dropdown-item" href="https://integritywatch.cl/" target="_blank">Čile</a>
-          <a class="dropdown-item" href="http://www.soldiepolitica.it/" target="_blank">Italija</a>
+			<a class="dropdown-item" href="https://www.integritywatch.eu/" target="_blank">Evropska unija</a>
+			<a class="dropdown-item" href="https://www.integritywatch.fr/" target="_blank">Francija</a>
+			<a class="dropdown-item" href="https://www.integritywatch.gr/" target="_blank">Grčija</a>
+			<a class="dropdown-item" href="http://www.soldiepolitica.it/" target="_blank">Italija</a>
+			<a class="dropdown-item" href="https://deputatiuzdelnas.lv/" target="_blank">Latvija</a>
+			<a class="dropdown-item" href="https://manoseimas.lt/" target="_blank">Litva</a>
+			<a class="dropdown-item" href="https://www.integritywatch.nl/" target="_blank">Nizozemska</a>
+			<a class="dropdown-item" href="https://integritywatch.es/" target="_blank">Španija</a>
+			<a class="dropdown-item" href="https://openaccess.transparency.org.uk/" target="_blank">Velika Britanija</a>
+			<a class="dropdown-item" href="https://integritywatch.cl/" target="_blank">Čile</a>
         </div>
       </li>
     </ul>
