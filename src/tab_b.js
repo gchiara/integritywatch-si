@@ -89,6 +89,7 @@ var vuedata = {
     default2: "#449188",
     lobbyistType: {
       "Izvoljeni predstavnik": "#449188",
+      "Voljeni predstavnik": "#449188",
       "Registrirani lobist": "#41ab9f",
       "Zakoniti zastopnik": "#39c0b0",
       "Zaposlen v organizaciji": "#30cfbd",
@@ -309,19 +310,8 @@ for ( var i = 0; i < 5; i++ ) {
 //Load data and generate charts
 csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
   //Loop through data to aply fixes and calculations
+   var cutOffDate = 20180622;
   _.each(contacts, function (d) {
-    //Count entries per insitution
-    if(vuedata.institutionEntries[d.institution]) {
-      vuedata.institutionEntries[d.institution] ++;
-    } else {
-      vuedata.institutionEntries[d.institution] = 1;
-    }
-    //Count entries per organization
-    if(vuedata.orgEntries[d.org_name]) {
-      vuedata.orgEntries[d.org_name] ++;
-    } else {
-      vuedata.orgEntries[d.org_name] = 1;
-    }
     //Change caps of contact_type and institution
     d.contact_type = d.contact_type.toLowerCase();
     d.contact_type = d.contact_type.charAt(0).toUpperCase() + d.contact_type.slice(1);
@@ -337,11 +327,24 @@ csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
       d.dateToInt = parseInt(d.dateToInt);
       d.date = splitdate[2] + '-' + splitdate[1] + '-' + splitdate[0];
     }
+    if(d.dateToInt >= cutOffDate) {
+      //Count entries per insitution
+      if(vuedata.institutionEntries[d.institution]) {
+        vuedata.institutionEntries[d.institution] ++;
+      } else {
+        vuedata.institutionEntries[d.institution] = 1;
+      }
+      //Count entries per organization
+      if(vuedata.orgEntries[d.org_name]) {
+        vuedata.orgEntries[d.org_name] ++;
+      } else {
+        vuedata.orgEntries[d.org_name] = 1;
+      }
+    }
   });
-
   //Filter data with cutoff date 22.6.2018
   contacts = _.filter(contacts, function(d, index) {
-    return d.dateToInt >= 20180622;
+    return d.dateToInt >= cutOffDate;
   });
 
   //Set dc main vars. The second crossfilter is used to handle the travels stacked bar chart.

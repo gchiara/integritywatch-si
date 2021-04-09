@@ -26,11 +26,9 @@
               <div class="col-md-8 chart-col" v-if="showInfo">
                 <div class="boxed-container description-container">
                   <h1>Varuh integritete – Omejitve poslovanja</h1>
-                  <p>To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled evidence subjektov, s katerimi veljajo omejitve poslovanja. <a href="#" @click="readMore = true">Preberi več</a>.</p>
-                  <p v-show="readMore">
-                    Seznam subjektov, s katerimi veljajo omejitve poslovanja, vsebuje podatke, ki jih Komisija za preprečevanje korupcije prejme od organizacij javnega sektorja. Tem morajo funkcionarji v mesecu dni po nastopu funkcije sporočiti podatke o povezanih subjektih, morebitne spremembe pa v osmih dneh od nastanka. Organi so dolžni prejete podatke sporočiti Komisiji za preprečevanje korupcije v 15 dneh od prejema.<br /><br /> 
-                    Omejitve poslovanja veljajo po Zakonu o integriteti in preprečevanju korupcije od trenutka, ko nastanejo in veljajo ne glede na to,  ali so vpisane na seznam. 
-                  </p>  
+                  <p>To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled omejitev poslovanja parlamenta in vlade. <a href="#" @click="readMore = !readMore">Preberi več</a>.</p>
+                  <p v-show="readMore">V zbirko so vključene veljavne in pretekle omejitve poslovanja Državnega zbora, Državnega sveta, Kabineta predsednika vlade, Generalnega sekretariata vlade, vseh ministrstev brez organov v sestavi ter Službe vlade za razvoj in evropsko kohezijsko politiko ter Urada vlade za Slovence v zamejstvu in po svetu. Seznam je informativne narave.</p>
+                  <p v-show="readMore">Seznam subjektov, s katerimi veljajo omejitve poslovanja, vsebuje podatke, ki jih Komisija za preprečevanje korupcije prejme od organizacij javnega sektorja. Tem morajo funkcionarji v mesecu dni po nastopu funkcije sporočiti podatke o povezanih subjektih, morebitne spremembe pa v osmih dneh od nastanka. Organi so dolžni prejete podatke sporočiti Komisiji za preprečevanje korupcije v 15 dneh od prejema. Seznam, ki vsebuje le trenutno veljavne omejitve poslovanja, je objavljen <a href="https://registri.kpk-rs.si/registri/omejitve_poslovanja/seznam/" target="_blank">tu</a>.</p>
                   <i class="material-icons close-btn" @click="showInfo = false">close</i>
                 </div>
               </div>

@@ -256,6 +256,8 @@ csv('./data/tab_c/business_limitations.csv?' + randomPar, (err, entries) => {
     d.Organizacija = d.Organizacija.replace("Svrk", "Služba vlade za razvoj in kohezijsko evropsko kohezijsko politiko");
     d.Organizacija = d.Organizacija.replace("Urad vlade rs za slovence v zamejstvu in po svetu", "Urad vlade za Slovence v zamejstvu in po svetu");
     d.Organizacija = d.Organizacija.replace("9999-12-30", "Do preklica");
+    d.Organizacija = d.Organizacija.replace("Služba vlade za razvoj in evropsko kohezijsko politiko","Služba vlade za razvoj in Evropsko kohezijsko politiko");
+    d.Organizacija = d.Organizacija.replace("Urad vlade za slovence v zamejstvu in po svetu","Urad vlade za Slovence v zamejstvu in po svetu");
     
   });
 

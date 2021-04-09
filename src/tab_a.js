@@ -342,12 +342,13 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
       vuedata.orgEntries[d.org_name] = 1;
     }
     //Change caps of contact_type and institution
-    d.contact_type = d.contact_type.toLowerCase();
+    d.contact_type = d.contact_type.toLowerCase().trim();
     d.contact_type = d.contact_type.charAt(0).toUpperCase() + d.contact_type.slice(1);
     d.institution_lowerCase = d.institution.toLowerCase();
     d.institution_lowerCase = d.institution_lowerCase.charAt(0).toUpperCase() + d.institution_lowerCase.slice(1);
     d.institution_lowerCase = d.institution_lowerCase.replace("republike slovenije", "Republike Slovenije");
-    d.institution_lowerCase = d.institution_lowerCase.replace("vlade Republike Slovenije", "Vlade Republike Slovenije");
+    d.institution_lowerCase = d.institution_lowerCase.replace("Služba vlade Republike Slovenije za razvoj in evropsko kohezijsko politiko","Služba vlade za razvoj in Evropsko kohezijsko politiko");
+    //d.institution_lowerCase = d.institution_lowerCase.replace("vlade Republike Slovenije", "Vlade Republike Slovenije");
     //Streamline purpose
     d.purposeStreamlined = vuedata.purposeCategory[d.purpose.toLowerCase()];
     if(!d.purposeStreamlined) {
