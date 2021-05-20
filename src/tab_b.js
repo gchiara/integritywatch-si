@@ -351,7 +351,7 @@ csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
   var ndx = crossfilter(contacts);
   var searchDimension = ndx.dimension(function (d) {
       //var entryString = ' ' + d.institution.toLowerCase();
-      var entryString = d.function + ' ' + d.party + ' ' + d.institution + ' ' + d.contact_type + ' ' + d.org_name + ' ' + d.lobbyist_type + ' ' + d.purpose + ' ' + d.purpose_details;
+      var entryString = d.id + ' ' + d.function + ' ' + d.party + ' ' + d.institution + ' ' + d.contact_type + ' ' + d.org_name + ' ' + d.lobbyist_type + ' ' + d.purpose + ' ' + d.purpose_details;
       return entryString.toLowerCase();
   });
   var institutionDimension = ndx.dimension(function (d) {

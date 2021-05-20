@@ -385,7 +385,7 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
   //Set dc main vars. The second crossfilter is used to handle the travels stacked bar chart.
   var ndx = crossfilter(contacts);
   var searchDimension = ndx.dimension(function (d) {
-      var entryString = d.function + ' ' + d.party + ' ' + d.institution + ' ' + d.contact_type + ' ' + d.org_name + ' ' + d.lobbyist_type + ' ' + d.purpose + ' ' + d.purpose_details;
+      var entryString = d.id + ' ' + d.function + ' ' + d.party + ' ' + d.institution + ' ' + d.contact_type + ' ' + d.org_name + ' ' + d.lobbyist_type + ' ' + d.purpose + ' ' + d.purpose_details;
       return entryString.toLowerCase();
   });
   var dateDimension = ndx.dimension(function (d) {

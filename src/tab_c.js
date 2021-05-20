@@ -264,7 +264,7 @@ csv('./data/tab_c/business_limitations.csv?' + randomPar, (err, entries) => {
   //Set dc main vars. The second crossfilter is used to handle the travels stacked bar chart.
   var ndx = crossfilter(entries);
   var searchDimension = ndx.dimension(function (d) {
-      var entryString = ' ' + d.Organizacija.toLowerCase();
+      var entryString = ' ' + d.Organizacija.toLowerCase() + ' ' + d.Omejitev_do + ' ' + d.Subjekt;
       return entryString.toLowerCase();
   });
 
