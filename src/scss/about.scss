@@ -63,7 +63,7 @@
     }
   }
 }
-.about-eu-funding {
+.about-eu-funding, .about-funding {
   text-align: center;
   font-family: Arial;
   margin: 20px auto;
@@ -73,6 +73,15 @@
   p {
     font-size: 13px;
     margin-top: 10px;
+  }
+}
+.about-funding {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  img {
+    width: 400px;
+    max-width: 90%;
+    margin-bottom: -20px;
   }
 }
 

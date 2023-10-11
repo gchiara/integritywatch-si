@@ -33,7 +33,12 @@ var vuedata = {
   showAllCharts: true,
   chartMargin: 40,
   instFilter: 'all',
+  selectedMandate: 'all',
   charts: {
+    mandateSelector: {
+      title: 'Izberite mandat',
+      info: ''
+    },
     topLobbyists: {
       title: 'Lobisti – Top 10',
       info: 'Organizacije, ki so z institucijo opravile največ poročanih lobističnih stikov.<br />Razporeditev se spreminja glede na vsakokratno izbiro filtrov.'
@@ -49,6 +54,10 @@ var vuedata = {
     officialType: {
       title: 'Funkcija/položaj lobiranca',
       info: 'Pravila o poročanju lobističnih stikov veljajo tako za funkcionarje kot javne uslužbence. Diagram odraža porazdelitev števila poročanih stikov glede na funkcijo oziroma položaj lobiranca.'
+    },
+    cloud: {
+      title: ' ',
+      info: 'Besedni oblak prikazuje besede, uporabljene v podrobnih opisih namena in cilja lobiranja. S klikom na posamezne besede se vam prikažejo stiki, pri katerih je beseda vsebovana v podrobnem opisu stika.'
     },
     purposeType: {
       title: 'Namen lobiranja',
@@ -79,8 +88,60 @@ var vuedata = {
   orgEntries: {},
   selectedElement: { "P": "", "Sub": ""},
   modalShowTable: '',
+  partiesStreamlining: {
+    "PS SD": "SD",
+    "PS SVOBODA": "SVOBODA",
+    "SVOBODA": "SVOBODA",
+    "NSI": "NSi",
+    "PS NSI": "NSi",
+    "PS IMNS": "IMNS",
+    "SD": "SD",
+    "SDS": "SDS",
+    "IMNS": "IMNS",
+    "PS SDS": "SDS",
+    "NSi": "NSi",
+    "LEVICA": "LEVICA",
+    "LMS": "LMŠ",
+    "SAB": "SAB",
+    "OMS": "OMS",
+    "Levica": "LEVICA",
+    "NEP": "NEP",
+    "DESUS": "DeSUS",
+    "SMC": "SMC",
+    "LMŠ": "LMŠ",
+    "Predlog zakona o nacionalnem demografskem skladu": "IMNS",
+    "SNS": "SNS",
+    "SLS": "SNS",
+    "PS SMC": "SMC",
+    "PS LMŠ": "LMŠ",
+    "PS MSC": "MSC",
+    "PS SNS": "SNS",
+    "PS SAB": "SAB",
+    "DZ RS": "RS",
+    "LNŠ": "LNŠ",
+    "DeSUS": "DeSUS",
+    "Predstavnik madžarske narodne skupnosti": "IMNS",
+    "Predstavnik italijanske narodne skupnosti": "IMNS",
+    "javna uslužbenka PS IMNS": "IMNS",
+    "NP": "NP",
+    "javna uslužbenka PS IMN": "IMNS",
+    "predstavnik madžarske narodne skupnosti": "IMNS",
+    "predstavnik italijanske narodne skupnosti": "IMNS",
+    "javna uslužbenka IMNS": "IMNS",
+    "javni uslužbenec PS IMNS": "IMNS",
+    "PS DeSUS": "DeSUS",
+    "desus": "DeSUS",
+    "levica": "LEVICA",
+    "nsi": "NSi",
+    "sd": "SD",
+    "NEPOVEZANI POSLANEC": "Nepovezani poslanec",
+    "Združena levica": "LEVICA",
+    "Nepovezani poslanec": "Nepovezani poslanec",
+    "nepovezani poslanec": "Nepovezani poslanec"
+  },
   colors: {
     generic: ["#3b95d0", "#4081ae", "#406a95", "#395a75" ],
+    genericGreen: ["#449188", "#449188", "#41ab9f", "#39c0b0", "#30cfbd"],
     default1: "#2b90b8",
     function: {
       "Javni uslužbenec": "#0d506b",
@@ -192,6 +253,11 @@ var charts = {
     type: 'pie',
     divId: 'contacttype_chart'
   },
+  cloud: {
+    chart: dc.wordCloud("#cloud_chart"),
+    type: 'cloud',
+    divId: 'cloud_chart'
+  },
   mainTable: {
     chart: null,
     type: 'table',
@@ -203,10 +269,10 @@ var charts = {
 var recalcWidth = function(divId) {
   return document.getElementById(divId).offsetWidth - vuedata.chartMargin;
 };
-var recalcWidthWordcloud = function() {
+var recalcWidthWordcloud = function(divId) {
   //Replace element if with wordcloud column id
-  var width = document.getElementById("party_chart").offsetWidth - vuedata.chartMargin*2;
-  return [width, 550];
+  var width = document.getElementById(divId).offsetWidth - vuedata.chartMargin;
+  return [width, 400];
 };
 var recalcCharsLength = function(width) {
   return parseInt(width / 8);
@@ -274,7 +340,7 @@ var resizeGraphs = function() {
         }));
       charts[c].chart.redraw();
     } else if(charts[c].type == 'cloud') {
-      charts[c].chart.size(recalcWidthWordcloud());
+      charts[c].chart.size(recalcWidthWordcloud(charts[c].divId));
       charts[c].chart.redraw();
     }
   }
@@ -311,7 +377,30 @@ for ( var i = 0; i < 5; i++ ) {
 csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
   //Loop through data to aply fixes and calculations
    var cutOffDate = 20180622;
+   var parties = [];
+   //Filter out "Državni svet Republike Slovenije" data entries that had the SD or SMC party names
+   contacts = _.filter(contacts, function (x) { 
+    if(x.institution == "DRŽAVNI SVET REPUBLIKE SLOVENIJE" && (x.party == "SD" || x.party == "SMC")) {
+      console.log(x);
+      return false;
+    }
+    return true;
+  });
   _.each(contacts, function (d) {
+    //Tidy party name
+    d.party = d.party.trim();
+    if(vuedata.partiesStreamlining[d.party]) {
+      d.party = vuedata.partiesStreamlining[d.party]
+    }
+    if(d.party == "smc" || d.party == "sds" || d.party == "lmš" || d.party == "Svoboda") {
+      d.party = d.party.toUpperCase();
+    }
+    if(d.party == "PS LEVICA") {
+      d.party = "LEVICA";
+    }
+    if(parties.indexOf(d.party) == -1) {
+      parties.push(d.party);
+    }
     //Change caps of contact_type and institution
     d.contact_type = d.contact_type.toLowerCase();
     d.contact_type = d.contact_type.charAt(0).toUpperCase() + d.contact_type.slice(1);
@@ -342,6 +431,7 @@ csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
       }
     }
   });
+  //console.log(parties);
   //Filter data with cutoff date 22.6.2018
   contacts = _.filter(contacts, function(d, index) {
     return d.dateToInt >= cutOffDate;
@@ -357,15 +447,23 @@ csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
   var institutionDimension = ndx.dimension(function (d) {
     var institution = d.institution.toLowerCase();
     return institution.toLowerCase();
-});
+  });
+  var dateDimension = ndx.dimension(function (d) {
+    return d.dateToInt;
+  });
 
   //CHART 1
   var createPartyChart = function() {
     var chart = charts.party.chart;
     var dimension = ndx.dimension(function (d) {
-      if(d.party.length < 1) {
+      if(d.party.trim().length < 1 || !d.party) {
         return "Ni podatka";
       }
+      /*
+      if(d.party.includes("Predstavnik")) {
+        return "Predstavnik";
+      }
+      */
       return d.party;
     });
     var group = dimension.group().reduceSum(function (d) {
@@ -376,6 +474,9 @@ csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
       return {
         all: function() {
           var entriesToAdd = ["Interesna skupina delodajalcev","Interesna skupina delojemalcev","Interesna skupina kmetov, obrtnikov in samostojnih poklicev","Interesna skupina negospodarskih dejavnosti","Interesna skupina lokalnih interesov"];
+          var m8Parties = ["SDS", "NSi", "SMC", "SNS", "DeSUS", "IMNS", "NP", "SAB", "LMŠ", "SD", "LEVICA","NEP","Ni podatka"];
+          var m9Parties = ["SVOBODA", "SDS", "NSi", "IMNS", "SD", "LEVICA", "Ni podatka"];
+          var allPartiesToRemove = ["RS", "LNŠ", "MSC", "OMS"];
           var data = source_group.all().filter(function(d) {
             return true;
           });
@@ -389,6 +490,20 @@ csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
                 data.push({key: entry, value: 0});
               }
             });
+          } else {
+            if(vuedata.selectedMandate == 'zbor-m8') {
+              data = source_group.all().filter(function(d) {
+                return (d.value != 0 && m8Parties.indexOf(d.key) > -1);
+              });
+            } else if(vuedata.selectedMandate == 'zbor-m9') {
+              data = source_group.all().filter(function(d) {
+                return (d.value != 0 && m9Parties.indexOf(d.key) > -1);
+              });
+            } else {
+              data = source_group.all().filter(function(d) {
+                return (d.value != 0 && allPartiesToRemove.indexOf(d.key) == -1);
+              });
+            }
           }
           return data;
         }
@@ -398,7 +513,7 @@ csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
     var charsLength = recalcCharsLength(width);
     chart
       .width(width)
-      .height(415)
+      .height(380)
       .margins({top: 0, left: 0, right: 0, bottom: 20})
       .group(filteredGroup)
       .dimension(dimension)
@@ -484,7 +599,7 @@ csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
     
     chart
       .width(width)
-      .height(510)
+      .height(590)
       .margins({top: 0, left: 0, right: 0, bottom: 20})
       .group(filteredGroup)
       .dimension(dimension)
@@ -609,11 +724,47 @@ csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
 
     chart.render();
   }
+
+  //CHART 7
+  var createWordCloud = function() {
+    var chart = charts.cloud.chart;
+    var dimension = ndx.dimension(function(d) {
+      return d.purpose_details || "";
+    })
+    var group = dimension.group().reduceSum(function(d) { return 1; });
+    chart
+    .dimension(dimension)
+    .group(group)
+    .rotate(function() { return ~~(Math.random() * 2) * 90; })
+    .maxWords(50)
+    .timeInterval(10)
+    .duration(200)
+    .ordinalColors(vuedata.colors.genericGreen)
+    .size([recalcWidth(charts.cloud.divId),350])
+    .font("Impact")
+    .scale(d3.scaleLinear().domain([10,700]).range([8, 23]))
+    .stopWords(/^(V|a|zvezi|med|kateri|ali|and|april|avgust|b|bi|bil|bila|bile|bili|bilo|biti|blizu|bo|bodo|bojo|bolj|bom|bomo|boš|boste|bova|brez|c|č|če|cel|cela|celi|celo|često|četrta|četrtek|četrti|četrto|čez|čigav|člen|člena|d|da|daleč|dan|danes|datum|december|deset|deseta|deseti|deseto|devet|deveta|deveti|deveto|do|dober|dobra|dobri|dobro|dokler|dol|dolg|dolga|dolgi|dolgotrajni|dopolnitev|dopolnitvah|dopolnitve|dovolj|drug|druga|drugi|drugo|dva|dve|e|eden|en|ena|ene|eni|enkrat|eno|etc.|f|februar|g|g.|ga|ga.|glede|gor|gospa|gospod|h|halo|i|idr.|ii|iii|in|iv|ix|iz|j|januar|jaz|je|ji|jih|jim|jo|julij|junij|jutri|k|kadarkoli|kaj|kajti|kako|kakor|kamor|kamorkoli|kar|karkoli|katerikoli|kdaj|kdo|kdorkoli|ker|ki|kje|kjer|kjerkoli|ko|koder|koderkoli|koga|komu|kot|kratek|kratka|kratke|kratki|l|lahka|lahke|lahki|lahko|le|lep|lepa|lepe|lepi|lepo|let|leto|ljubljana|m|maj|majhen|majhna|majhni|malce|malo|manj|marec|me|med|medtem|mene|mesec|mi|midva|midve|mnogo|moj|moja|moje|mora|morajo|moram|moramo|moraš|morate|morem|motiv|motivi|motivom|mu|n|na|nad|naj|najina|najino|najmanj|naju|največ|nam|narobe|nas|naš|naša|naše|nato|nazaj|ne|nedavno|nedelja|nek|neka|nekaj|nekatere|nekateri|nekatero|nekdo|neke|nekega|neki|nekje|neko|nekoč|nekoga|ni|nič|nikamor|nikdar|nikjer|nikoli|nje|njega|njegov|njegova|njegovo|njej|njemu|njen|njena|njeno|nji|njih|njihov|njihova|njihovo|njiju|njim|njo|njun|njuna|njuno|no|nocoj|novele|november|novo|npr.|o|ob|oba|obe|oboje|od|odprt|odprta|odprti|of|okoli|oktober|on|onadva|one|oni|onidve|osem|osma|osmi|osmo|oz.|p|pa|pet|peta|petek|peti|peto|po|pod|pogosto|poleg|poln|polna|polni|polno|ponavadi|ponedeljek|ponovno|potem|povsod|pozdravljen|pozdravljeni|prav|prava|prave|pravi|pravo|prazen|prazna|prazno|prbl.|precej|pred|predlog|predloga|predlogom|predstavitev|prej|preko|pri|pribl.|približno|primer|pripravljen|pripravljena|pripravljeni|problematike|proti|prva|prvi|prvo|r|ravno|reč|redko|res|s|š|saj|sam|sama|same|sami|samo|se|sebe|sebi|sedaj|sedem|sedma|sedmi|sedmo|sem|september|šest|šesta|šesti|šesto|seveda|si|sicer|skoraj|skozi|slab|Slovenije|smo|so|sobota|spet|sprememb|spremembo|sreda|srednja|srednji|sta|ste|štiri|stran|stvar|sva|t|ta|tak|taka|take|taki|tako|takoj|tam|te|tebe|tebi|tega|ter|težak|težka|težki|težko|ti|tista|tiste|tisti|tisto|tj.|tja|to|toda|torek|tretja|tretje|tretji|tri|tu|tudi|tukaj|tvoj|tvoja|tvoje|u|ukrep|ukrepi|ukrepih|v|vaju|vam|vas|vaš|vaša|vaše|včasih|včeraj|ve|več|vedno|velik|velika|veliki|veliko|vendar|ves|vi|vidva|vii|viii|visok|visoka|visoke|visoki|vsa|vsaj|vsak|vsaka|vsakdo|vsake|vsaki|vsakomur|vse|vsega|vsi|vso|X|x|z|ž|za|zadaj|zadnji|zakaj|zakon|zakoni|zakonih|zakonu|zaprta|zaprti|zaprto|zdaj|že|zelo|zunaj)$/)
+    .onClick(function(d){setword(d.key);})
+    .textAccessor(function(d) {return d.purpose_details;});
+    chart.size(recalcWidthWordcloud(charts.cloud.divId));
+    chart.render();
+  }
   
   //TABLE
   var createTable = function() {
     var count=0;
     charts.mainTable.chart = $("#dc-data-table").dataTable({
+      "language": {
+        "info": "Prikazujem _START_ do _END_ od _TOTAL_ vnosov",
+        "lengthMenu": "Prikaži _MENU_ vnosov",
+        "search": "Keresés",
+        "paginate": {
+          "first":      "First",
+          "last":       "Last",
+          "next":       "Naslednja",
+          "previous":   "Prejšnja"
+        }
+      },
       "columnDefs": [
         {
           "searchable": false,
@@ -764,8 +915,27 @@ csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
     }
   }
 
+  //Set word for wordcloud
+  var setword = function(wd) {
+    //console.log(charts.subject.chart);
+    $("#search-input").val(wd);
+    var s = wd.toLowerCase();
+    searchDimension.filter(function(d) { 
+      return d.indexOf(s) !== -1;
+    });
+    throttle();
+    var throttleTimer;
+    function throttle() {
+      window.clearTimeout(throttleTimer);
+      throttleTimer = window.setTimeout(function() {
+          dc.redrawAll();
+      }, 250);
+    }
+  }
+
   //Institution filters
   $('.institution-filter-btn').click(function(){
+    resetGraphs();
     var filter = 'all';
     if($(this).hasClass('inst1')){
       filter = 'Državni Svet Republike Slovenije';
@@ -786,6 +956,22 @@ csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
     dc.redrawAll();
   });
 
+  //Mandate selector
+  $( "#mandateSelector" ).change(function() {
+    dateDimension.filter(function(d) { 
+      if(vuedata.selectedMandate == 'all') {
+        return true;dateDimension
+      } else if(vuedata.selectedMandate == 'zbor-m8') {
+        return d >= 20180622 && d < 20220513;
+      } else if(vuedata.selectedMandate == 'zbor-m9') {
+        return d >= 20220513;
+      } else if(vuedata.selectedMandate == 'svet-m6') {
+        return d >= 20171212;
+      } 
+    });
+    dc.redrawAll();
+  });
+
   //Reset charts
   var resetGraphs = function() {
     for (var c in charts) {
@@ -795,12 +981,14 @@ csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
     }
     searchDimension.filter(null);
     institutionDimension.filter(null);
+    dateDimension.filter(null);
+    vuedata.selectedMandate = 'all';
     $('#search-input').val('');
-    $('.institution-filter-btn.inst2').click();
     dc.redrawAll();
   }
   $('.reset-btn').click(function(){
     resetGraphs();
+    $('.institution-filter-btn.inst2').click();
   })
   
   //Render charts
@@ -810,6 +998,7 @@ csv('./data/tab_b/parliament.csv?' + randomPar, (err, contacts) => {
   createOfficialTypeChart();
   createPurposeTypeChart();
   createContactTypeChart();
+  createWordCloud();
   createTable();
 
   $('.dataTables_wrapper').append($('.dataTables_length'));

@@ -6,13 +6,16 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a href="./" class="nav-link" :class="{active: page == 'tabA'}">Lobiranje vlade</a>
+        <a href="./index.php" class="nav-link" :class="{active: page == 'tabA'}">Lobiranje vlade</a>
       </li>
       <li class="nav-item">
         <a href="./parlamenta.php" class="nav-link" :class="{active: page == 'tabB'}">Lobiranje parlamenta</a>
       </li>
       <li class="nav-item">
         <a href="./limitations.php" class="nav-link" :class="{active: page == 'tabC'}">Omejitve poslovanja</a>
+      </li>
+      <li class="nav-item">
+        <a href="./gifts.php" class="nav-link" :class="{active: page == 'tabD'}">Darila</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,6 +36,9 @@
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a href="https://www.transparency.si/podpri/" target="_blank" class="nav-link">Doniraj</a>
+      </li>
       <li class="nav-item">
         <a href="./about.php" class="nav-link">O Varuhu integritete</a>
       </li>

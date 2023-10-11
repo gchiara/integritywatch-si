@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet">
-    <link rel="stylesheet" href="static/tab_a.css">
+    <link rel="stylesheet" href="static/tab_a.css?v=7">
     <meta property="og:title" content="Varuh integritete – Lobistični stiki vlade" />
     <meta property="og:description" content="To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled poročanih lobističnih stikov Vlade Republike Slovenije." />
 </head>
@@ -50,6 +50,7 @@
                       <option value="all" selected="selected">Vse</option>
                       <option value="m13">13. vlada Republike Slovenije</option>
                       <option value="m14">14. vlada Republike Slovenije</option>
+                      <option value="m15">15. vlada Republike Slovenije</option>
                     </select>
                   </div>
                 </div>
@@ -128,6 +129,15 @@
                 </table>
               </div>
             </div>
+          </div>
+          <!-- LAST MODIFIED -->
+          <div class="col-12 chart-col">
+            <?php
+            $filename = './data/tab_a/executive.csv';
+            if (file_exists($filename)) {
+                echo "Zadnja posodobitev podatkov: " . date ("d. F Y", filemtime($filename));
+            }
+            ?>
           </div>
         </div>
       </div>
@@ -227,7 +237,7 @@
     <script type="text/javascript" src="vendor/js/crossfilter.min.js"></script>
     <script type="text/javascript" src="vendor/js/dc.js"></script>
     <script type="text/javascript" src="vendor/js/dc.cloud.js"></script>
-    <script src="static/tab_a.js"></script>
+    <script src="static/tab_a.js?v=7"></script>
 
  
 </body>

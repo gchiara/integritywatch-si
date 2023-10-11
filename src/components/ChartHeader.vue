@@ -29,14 +29,14 @@ $color_TI_darker: darken( $color_TI, 20% );
   margin: 0;
   background: #fafafa;
   .chart-title {
-    font-size: 20px;
+    font-size: 17px;
     text-align: left;
     color: $color_TI_darker;
     @media only screen and (max-width: 1400px) {
-      font-size: 18px;
+      font-size: 17px;
     }
     @media only screen and (max-width: 1250px) {
-      font-size: 16px;
+      font-size: 15px;
     }
     @media only screen and (max-width: 767px) {
       font-size: 20px;

@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet">
-    <link rel="stylesheet" href="static/tab_c.css">
+    <link rel="stylesheet" href="static/tab_c.css?v=5">
     <meta property="og:title" content="Varuh integritete – Omejitve poslovanja" />
     <meta property="og:description" content="To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled poročanih lobističnih stikov Vlade Republike Slovenije." />
 </head>
@@ -84,6 +84,15 @@
               </div>
             </div>
           </div>
+          <!-- LAST MODIFIED -->
+          <div class="col-12 chart-col">
+            <?php
+            $filename = './data/tab_c/business_limitations.csv';
+            if (file_exists($filename)) {
+              echo "Zadnja posodobitev podatkov: " . date ("d. F Y", filemtime($filename));
+            }
+            ?>
+          </div>
         </div>
       </div>
       <!-- DETAILS MODAL -->
@@ -140,7 +149,7 @@
     <script type="text/javascript" src="vendor/js/crossfilter.min.js"></script>
     <script type="text/javascript" src="vendor/js/dc.js"></script>
     <script type="text/javascript" src="vendor/js/dc.cloud.js"></script>
-    <script src="static/tab_c.js"></script>
+    <script src="static/tab_c.js?v=5"></script>
 
  
 </body>

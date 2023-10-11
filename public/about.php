@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet">
-    <link rel="stylesheet" href="static/about.css">
+    <link rel="stylesheet" href="static/about.css?v=1">
 </head>
 <body>
     <?php include 'header.php' ?>
@@ -35,11 +35,14 @@
                 <ul>
                 <li>podatke o poročanih lobističnih stikih vlade,</li>
                 <li>podatke o poročanih lobističnih stikih parlamenta,</li>
-                <li>podatke o omejitvah poslovanja vlade in parlamenta.</li>
+                <li>podatke o omejitvah poslovanja vlade in parlamenta,</li>
+                <li>podatke o darilih, ki so jih prejeli funkcionarji in državni organi.</li>
                 </ul>
                 </p>
-                <p>Zbirka podatkov o poročanih lobističnih stikih vsebuje nabor informacij, ki omogočajo vpogled v dinamiko in vsebino lobiranja funkcionarjev ter javnih uslužbencev vlade in parlamenta. Zajeti so poročani lobistični stiki Državnega zbora, Državnega sveta, ministrstev brez organov v sestavi in vladnih služb Kabineta predsednika vlade, Generalnega sekretariata vlade, Službe vlade za razvoj in kohezijo ter Urada za Slovence v zamejstvu in svetu. Orodje omogoča pregled poročanih lobističnih stikov funkcionarjev in javnih uslužbencev, prepoznavo institucij z nadpovprečno visokim ali nizkim številom poročanih lobističnih stikov, pregled po številu poročanih lobističnih stikov najbolj dejavnih organizacij, pregled lobirancev glede na njihov status, pregled števila lobističnih stikov po namenu lobiranja, pregled lobističnih stikov glede na način in druge možnosti. Vir podatkov je Seznam poročanih lobističnih stikov v Erar, avtor izbirne zbirke je Komisija za preprečevanje korupcije.</p>
-                <p>Podatki o omejitvah poslovanja Državnega zbora, Državnega sveta, ministrstev brez organov v sestavi in vladnih služb Kabineta predsednika vlade, Generalnega sekretariata vlade, Službe vlade za razvoj in kohezijo ter Urada za Slovence v zamejstvu in svetu omogočajo razvrščanje in vizualne primerjave. Orodje omogoča prepoznavo organov/organizacij z nadpovprečno visokim ali nizkim številom vpisanih omejitev, pregled vpisanih omejitev glede na subjekt, pregled omejitev poslovanja glede na njihovo trajanje in število transakcij v času, ko je veljala omejitev. Vir podatkov je Seznam veljavnih in preteklih omejitev poslovanja v Erar, avtor izbirne zbirke je Komisija za preprečevanje korupcije.</p>
+                <p>Zbirka podatkov o poročanih lobističnih stikih vsebuje nabor informacij, ki omogočajo vpogled v dinamiko in vsebino lobiranja funkcionarjev ter javnih uslužbencev vlade in parlamenta. Zajeti so poročani lobistični stiki Državnega zbora, Državnega sveta, ministrstev brez organov v sestavi in vladnih služb Kabineta predsednika vlade, Generalnega sekretariata vlade ter Urada za Slovence v zamejstvu in svetu. Ker je v času 15. mandata (24. januarja 2023) prišlo do sprememb v sestavi vlade, prikaz tega mandata nekatera ministrstva prikazuje tako v stari kot v novi verziji.</p>
+                <p>Orodje omogoča pregled poročanih lobističnih stikov funkcionarjev in javnih uslužbencev, prepoznavo institucij z nadpovprečno visokim ali nizkim številom poročanih lobističnih stikov, pregled po številu poročanih lobističnih stikov najbolj dejavnih organizacij, pregled lobirancev glede na njihov status, pregled števila lobističnih stikov po namenu lobiranja, pregled lobističnih stikov glede na način in druge možnosti. Vir podatkov je Seznam poročanih lobističnih stikov v aplikaciji Erar, avtor izbirne zbirke je Komisija za preprečevanje korupcije.</p>
+                <p>Podatki o omejitvah poslovanja Državnega zbora, Državnega sveta, ministrstev brez organov v sestavi in vladnih služb Kabineta predsednika vlade, Generalnega sekretariata vlade, Službe vlade za razvoj in kohezijo ter Urada za Slovence v zamejstvu in svetu omogočajo razvrščanje in vizualne primerjave. Orodje omogoča prepoznavo organov/organizacij z nadpovprečno visokim ali nizkim številom vpisanih omejitev, pregled vpisanih omejitev glede na subjekt, pregled omejitev poslovanja glede na njihovo trajanje in število transakcij v času, ko je veljala omejitev. Vir podatkov je Seznam veljavnih in preteklih omejitev poslovanja v aplikaciji Erar, avtor izbirne zbirke je Komisija za preprečevanje korupcije.</p>
+                <p>Podatki o prejetih darilih funkcionarjev in državnih organov omogočajo pregled in razvrščanje obdarovanja po letih, po vrednosti daril, po najpogostejših prejemnikih, najpogostejših darovalcih, tipu darila, načinu izročitve, priložnosti obdarovanja in po ključnih besedah v opisu darila.  Orodje torej omogoča prepoznavo in primerjavo vseh ključnih okoliščin obdarovanja javnih funkcionarjev od leta 2013 naprej. Na dnu strani je navedeno število daril v bazi podatkov, najvišja vrednost darila in povprečna vrednost vseh daril. Vir podatkov je Seznam veljavnih in preteklih omejitev poslovanja v aplikaciji Erar, avtor izbirne zbirke je Komisija za preprečevanje korupcije.</p>
                 <p><a href="https://www.transparency.si/" target="_blank">Transparency International Slovenia</a> je pri vzpostavitvi spletne strani Varuh integritete sodeloval z mednarodnim sekretariatom <a href="https://www.transparency.org/" target="_blank">Transparency International</a> in <a href="https://transparency.eu/" target="_blank">Transparency International EU</a> v sklopu projekta <a href="https://www.transparency.org/en/projects/integrity-watch-europe-online-tools-for-the-fight-against-political-corruption-in-europe" target="_blank">Integrity Watch Europe</a>, ki ga sofinancira Evropska unija iz Sklada za notranjo varnost.</p>
                 <p><strong>Več informacij o Transparency International Slovenia</strong></p>
                 <p>Transparency International Slovenia je neodvisna, nevladna in nepridobitna organizacija s statusom v javnem interesu. Od leta 2009 je del mednarodne mreže nevladnih organizacij za boj proti korupciji Transparency International.</p>
@@ -47,6 +50,10 @@
                 <div class="about-eu-funding">
                   <img class="logo" src="./images/flag_yellow_low.jpg" />
                   <p style="font-family: Arial">Spletno stran je sofinancirala Evropska unija iz Sklada za notranjo varnost.</p>
+                </div>
+                <div class="about-funding">
+                  <img class="logo" src="./images/logotip-MJU-01.jpg" />
+                  <p style="font-family: Arial">Posodobitev sta v sklopu projekta Integrity Watch 3.0 sofinancirala Evropska komisija in Ministrstvo za javno upravo.</p>
                 </div>
                 <p>Website design and development:<br />
                 <a href="http://www.chiaragirardelli.net">Chiara Girardelli</a><br /></p>
@@ -123,6 +130,6 @@
         </div>
       </div>
     </div>
-    <script src="static/about.js"></script>
+    <script src="static/about.js?v=1"></script>
 </body>
 </html>

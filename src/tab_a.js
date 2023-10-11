@@ -36,7 +36,7 @@ var vuedata = {
   charts: {
     mandateSelector: {
       title: 'Izberite mandat',
-      info: 'Izberite obdobje pregledovanja poročanih lobističnih stikov po mandatih vlad. Z možnostjo "Vse" pregledujete vse poročane lobistične stike izbranih vladnih institucij od 13. 9. 2018 naprej'
+      info: 'Izberite obdobje pregledovanja poročanih lobističnih stikov po mandatih vlad. Z možnostjo "Vse" pregledujete vse poročane lobistične stike izbranih vladnih institucij od 13. 9. 2018 naprej. Ker so bili s 15. vlado vzpostavljeni novi resorji, do širitve pa je prišlo šele več mesecev po začetku mandata, boste v prikazu za 15. mandat vlade našli tako nova kot tudi nekatera stara ministrstva.'
     },
     institutionType: {
       title: 'Lobistični stiki vlade',
@@ -73,10 +73,18 @@ var vuedata = {
       info: 'Za dodatne informacije o posameznem lobističnem stiku kliknite nanj.'
     }
   },
+  institutionsToAdd: {
+    'm13': ['Urad vlade za Slovence v zamejstvu in po svetu'],
+    'm14': ['Urad vlade za Slovence v zamejstvu in po svetu'],
+    'm15': ['Urad vlade za Slovence v zamejstvu in po svetu', 'Ministrstvo za visoko šolstvo, znanost in inovacije'],
+    'all': ['Urad vlade za Slovence v zamejstvu in po svetu', 'Ministrstvo za visoko šolstvo, znanost in inovacije']
+  },
   executiveCategories: {
     "generalni sekretariat vlade republike slovenije": "Generalni sekretariat vlade",
     "kabinet predsednika vlade republike slovenije": "Kabinet predsednika vlade",
-    "služba vlade republike slovenije za razvoj in evropsko kohezijsko politiko": "Ministrstva"
+    "služba vlade republike slovenije za razvoj in evropsko kohezijsko politiko": "Ministrstva",
+    "služba vlade republike slovenije za digitalno preobrazbo": "Ministrstva",
+    "urad vlade republike slovenije za informacijsko varnost": "Ministrstva"
   },
   lobbyistTypeCategories: {
     "Lobist je izvoljeni predstavnik interesne organizacije za katero lobira": "Izvoljeni predstavnik interesne organizacije",
@@ -99,7 +107,8 @@ var vuedata = {
       "Ministrstva": "#0d506b",
       "Kabinet predsednika vlade": "#1d7598",
       "Generalni sekretariat vlade": "#2b90b8",
-      "": "#ccc"
+      "": "#ccc",
+      "Other": "#ccc",
     },
     function: {
       "Javni uslužbenec": "#0d506b",
@@ -326,9 +335,21 @@ for ( var i = 0; i < 5; i++ ) {
 }
 //Load data and generate charts
 //var lobbyist_typeList = {}
+//To see if the exclusions only apply for mandate 15
+var excludedInstitutions = ['Agencija','Služba vlade', 'Služba Vlade', 'Druge javne službe','Občina','', 'JAVNI SKLAD REPUBLIKE SLOVENIJE ZA PODJETNIŠTVO']
 csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
+csv('./data/tab_a/institutions_streamlining_new.csv?' + randomPar, (err1, instStreamlining) => {
   //Loop through data to aply fixes and calculations
+  var instTypes = [];
+  //Add institutions streamlinings per mandate and then remove the ones that are marked to be removed
   _.each(contacts, function (d) {
+    d.institutionStreamlining = _.clone(_.find(instStreamlining, function (x) { return x.institution.toLowerCase().trim() == d.institution.toLowerCase().trim() }));
+  });
+  contacts = _.filter(contacts, function (x) { return x.institutionStreamlining.to_remove.toLowerCase().trim() !== "yes"; });
+  _.each(contacts, function (d) {
+    if(instTypes.indexOf(d.institution) == -1) {
+      instTypes.push(d.institution);
+    }
     //Count entries per insitution
     if(vuedata.institutionEntries[d.institution]) {
       vuedata.institutionEntries[d.institution] ++;
@@ -344,25 +365,21 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
     //Change caps of contact_type and institution
     d.contact_type = d.contact_type.toLowerCase().trim();
     d.contact_type = d.contact_type.charAt(0).toUpperCase() + d.contact_type.slice(1);
-    d.institution_lowerCase = d.institution.toLowerCase();
-    d.institution_lowerCase = d.institution_lowerCase.charAt(0).toUpperCase() + d.institution_lowerCase.slice(1);
-    d.institution_lowerCase = d.institution_lowerCase.replace("republike slovenije", "Republike Slovenije");
-    d.institution_lowerCase = d.institution_lowerCase.replace("Služba vlade Republike Slovenije za razvoj in evropsko kohezijsko politiko","Služba vlade za razvoj in Evropsko kohezijsko politiko");
-    //d.institution_lowerCase = d.institution_lowerCase.replace("vlade Republike Slovenije", "Vlade Republike Slovenije");
     //Streamline purpose
     d.purposeStreamlined = vuedata.purposeCategory[d.purpose.toLowerCase()];
     if(!d.purposeStreamlined) {
       console.log(d.purpose);
     }
     //Streamline executive category
-    d.instituionStreamlined = "";
+    d.institutionCategory = "";
     if(d.institution.toLowerCase().indexOf("ministrstvo za") > -1) {
-      d.instituionStreamlined = "Ministrstva";
+      d.institutionCategory = "Ministrstva";
     } else {
-      d.instituionStreamlined = vuedata.executiveCategories[d.institution.toLowerCase()];
+      d.institutionCategory = vuedata.executiveCategories[d.institution.toLowerCase()];
     }
-    if(!d.instituionStreamlined) {
-      console.log(d);
+    if(!d.institutionCategory) {
+      //console.log(d.institution);
+      //console.log(d);
     }
     
     //Change date format and get int version for filtering
@@ -380,7 +397,14 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
     } else {
       console.log(d);
     }
+    //Custom institution streamlining for some m15 cases
+    if(d.dateToInt < 20230124) {
+      if(d.institution == 'MINISTRSTVO ZA ZUNANJE IN EVROPSKE ZADEVE') {
+        d.institutionStreamlining.streamlined_15 = 'Ministrstvo za zunanje zadeve';
+      }
+    }
   });
+  //console.log(instTypes);
 
   //Set dc main vars. The second crossfilter is used to handle the travels stacked bar chart.
   var ndx = crossfilter(contacts);
@@ -396,7 +420,10 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
   var createInstitutionTypeChart = function() {
     var chart = charts.institutionType.chart;
     var dimension = ndx.dimension(function (d) {
-      return d.instituionStreamlined; 
+      if(d.institutionCategory) {
+        return d.institutionCategory; 
+      }
+      return "Other";
     });
     var group = dimension.group().reduceSum(function (d) { return 1; });
     var sizes = calcPieSize(charts.institutionType.divId);
@@ -553,18 +580,52 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
   var createInstitutionTypeRowChart = function() {
     var chart = charts.institutionTypeRow.chart;
     var dimension = ndx.dimension(function (d) {
-      return d.institution_lowerCase;
+      //return d.institution;
+      if(vuedata.selectedMandate == 'all') {
+        return d.institutionStreamlining.vse;
+      } else if(vuedata.selectedMandate == 'm15') {
+        return d.institutionStreamlining.streamlined_15;
+      } else if(vuedata.selectedMandate == 'm14') {
+        return d.institutionStreamlining.streamlined_14;
+      } else if(vuedata.selectedMandate == 'm13') {
+        return d.institutionStreamlining.streamlined_13;
+      } 
     });
     var group = dimension.group().reduceSum(function (d) {
         return 1;
     });
+    //Filter out "Služba vlade Republike Slovenije za digitalno preobrazbo" if 13 is selected
+    var filteredGroup = (function(source_group) {
+      return {
+        all: function() {
+          var data = source_group.all().filter(function(d) {
+            return d.value !== 0;
+          });
+          //institutionsToAdd
+          _.each(vuedata.institutionsToAdd[vuedata.selectedMandate], function (e) {
+            var thisInst = _.find(data, function (x) { return x.key == e });
+            if(!thisInst) {
+              data.push({'key': e, 'value': 0});
+            }
+          });
+          /*
+          if(vuedata.selectedMandate == 'm13') {
+            data = source_group.all().filter(function(d) {
+              return (d.key != "Služba vlade Republike Slovenije za digitalno preobrazbo");
+            });
+          }
+          */
+          return data;
+        }
+      };
+    })(group);
     var width = recalcWidth(charts.institutionTypeRow.divId);
     var charsLength = recalcCharsLength(width);
     chart
       .width(width)
       .height(500)
       .margins({top: 0, left: 0, right: 0, bottom: 20})
-      .group(group)
+      .group(filteredGroup)
       .dimension(dimension)
       .colorCalculator(function(d, i) {
         return vuedata.colors.default1;
@@ -656,6 +717,17 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
   var createTable = function() {
     var count=0;
     charts.mainTable.chart = $("#dc-data-table").dataTable({
+      "language": {
+        "info": "Prikazujem _START_ do _END_ od _TOTAL_ vnosov",
+        "lengthMenu": "Prikaži _MENU_ vnosov",
+        "search": "Keresés",
+        "paginate": {
+          "first":      "First",
+          "last":       "Last",
+          "next":       "Naslednja",
+          "previous":   "Prejšnja"
+        }
+      },
       "columnDefs": [
         {
           "searchable": false,
@@ -736,7 +808,7 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
       "bPaginate": true,
       "bLengthChange": true,
       "bFilter": false,
-      "order": [[ 0, "desc" ]],
+      "order": [[ 3, "desc" ]],
       "bSort": true,
       "bInfo": true,
       "bAutoWidth": false,
@@ -809,6 +881,7 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
     vuedata.selectedMandate = 'all';
     $('#search-input').val('');
     dc.redrawAll();
+    createInstitutionTypeRowChart();
   }
   $('.reset-btn').click(function(){
     resetGraphs();
@@ -819,13 +892,16 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
     dateDimension.filter(function(d) { 
       if(vuedata.selectedMandate == 'all') {
         return true;
+      } else if(vuedata.selectedMandate == 'm15') {
+        return d >= 20220602;
       } else if(vuedata.selectedMandate == 'm14') {
-        return d >= 20200313;
+        return d >= 20200314 && d < 20220602;
       } else if(vuedata.selectedMandate == 'm13') {
-        return d >= 20180913 && d < 20200313;
-      }
+        return d >= 20180913 && d < 20200314;
+      } 
     });
     dc.redrawAll();
+    createInstitutionTypeRowChart();
   });
   
   //Render charts
@@ -950,4 +1026,5 @@ csv('./data/tab_a/executive.csv?' + randomPar, (err, contacts) => {
   
   //Show disclaimer modal
   //$('#disclaimerModal').modal();
+})
 })

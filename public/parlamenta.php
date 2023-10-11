@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet">
-    <link rel="stylesheet" href="static/tab_b.css">
+    <link rel="stylesheet" href="static/tab_b.css?v=4">
     <meta property="og:title" content="Varuh integritete – Lobistični stiki parlamenta" />
     <meta property="og:description" content="To je uporabnikom prijazna interaktivna zbirka podatkov, ki vam omogoča edinstven pregled poročanih lobističnih stikov Vlade Republike Slovenije." />
 </head>
@@ -47,6 +47,15 @@
                   <button class="institution-filter-btn inst2" :class="{ active: instFilter == 'inst2' }">Državni zbor Republike Slovenije</button>
                   <button class="institution-filter-btn inst1" :class="{ active: instFilter == 'inst1' }">Državni svet Republike Slovenije</button>
                 </div>
+                <chart-header :title="charts.mandateSelector.title" :info="charts.mandateSelector.info" ></chart-header>
+                  <div class="boxed-container mandate-selector-container">
+                    <select id="mandateSelector" v-model="selectedMandate">
+                      <option value="all" selected="selected">Vse</option>
+                      <option value="zbor-m8" v-if="instFilter == 'inst2'">8. Državni zbor Republike Slovenije</option>
+                      <option value="zbor-m9" v-if="instFilter == 'inst2'">9. Državni zbor Republike Slovenije</option>
+                      <option value="svet-m6" v-if="instFilter == 'inst1'">6. Državni svet Republike Slovenije</option>
+                    </select>
+                  </div>
               </div>
               <div class="col-md-12 chart-col">
                 <div class="boxed-container chart-container tab_b_1">
@@ -58,6 +67,12 @@
                 <div class="boxed-container chart-container tab_b_2">
                   <chart-header :title="charts.officialType.title" :info="charts.officialType.info" ></chart-header>
                   <div class="chart-inner" id="officialtype_chart"></div>
+                </div>
+              </div>
+              <div class="col-md-6 chart-col">
+                <div class="boxed-container chart-container tab_b_2">
+                  <chart-header :title="charts.cloud.title" :info="charts.cloud.info" ></chart-header>
+                  <div class="chart-inner" id="cloud_chart"></div>
                 </div>
               </div>
             </div>
@@ -117,6 +132,15 @@
                 </table>
               </div>
             </div>
+          </div>
+          <!-- LAST MODIFIED -->
+          <div class="col-12 chart-col">
+            <?php
+            $filename = './data/tab_b/parliament.csv';
+            if (file_exists($filename)) {
+              echo "Zadnja posodobitev podatkov: " . date ("d. F Y", filemtime($filename));
+            }
+            ?>
           </div>
         </div>
       </div>
@@ -193,7 +217,7 @@
     <script type="text/javascript" src="vendor/js/crossfilter.min.js"></script>
     <script type="text/javascript" src="vendor/js/dc.js"></script>
     <script type="text/javascript" src="vendor/js/dc.cloud.js"></script>
-    <script src="static/tab_b.js"></script>
+    <script src="static/tab_b.js?v=4"></script>
 
  
 </body>

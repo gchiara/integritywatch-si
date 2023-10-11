@@ -33,6 +33,37 @@ var vuedata = {
   showAllCharts: true,
   chartMargin: 40,
   instFilter: 'all',
+  relevantOrgs: [
+    "državni zbor republike slovenije",
+    "državni svet republike slovenije",
+    "kabinet predsednika vlade",
+    "generalni sekretariat vlade",
+    "ministrstvo za delo, družino, socialne zadeve in enake možnosti",
+    "ministrstvo za finance",
+    "ministrstvo za gospodarski razvoj in tehnologijo",
+    "ministrstvo za infrastrukturo",
+    "ministrstvo za izobraževanje, znanost in šport",
+    "ministrstvo za javno upravo",
+    "ministrstvo za kmetijstvo, gozdarstvo in prehrano",
+    "ministrstvo za kulturo",
+    "ministrstvo za notranje zadeve",
+    "ministrstvo za obrambo",
+    "ministrstvo za okolje in prostor",
+    "ministrstvo za pravosodje",
+    "ministrstvo za zdravje",
+    "ministrstvo za zunanje zadeve",
+    "služba vlade republike slovenije za razvoj in evropsko kohezijsko politiko",
+    "urad vlade republike slovenije za slovence v zamejstvu in po svetu",
+    "služba vlade republike slovenije za digitalno preobrazbo",
+    "ministrstvo za zunanje in evropske zadeve",
+    "ministrstvo za naravne vire in prostor",
+    "ministrstvo za digitalno preobrazbo",
+    "ministrstvo za vzgojo in izobraževanje",
+    "ministrstvo za okolje, podnebje in energijo",
+    "ministrstvo za visoko šolstvo, znanost in inovacije",
+    "ministrstvo za kohezijo in regionalni razvoj",
+    "ministrstvo za gospodarstvo, turizem in šport"
+  ],
   charts: {
     institutions: {
       title: 'Število omejitev na institucijo',
@@ -82,7 +113,7 @@ new Vue({
   methods: {
     //Share
     downloadDataset: function () {
-      window.open('./data/tab_b/parliament.csv');
+      window.open('./data/tab_c/business_limitations.csv');
     },
     share: function (platform) {
       if(platform == 'twitter'){
@@ -145,8 +176,8 @@ var recalcCharsLength = function(width) {
 };
 var calcPieSize = function(divId) {
   var newWidth = recalcWidth(divId);
-  if(newWidth > 400) {
-    newWidth = 400;
+  if(newWidth > 300) {
+    newWidth = 300;
   }
   var sizes = {
     'width': newWidth,
@@ -248,6 +279,10 @@ for ( var i = 0; i < 5; i++ ) {
 //Load data and generate charts
 var lobbyist_typeList = {}
 csv('./data/tab_c/business_limitations.csv?' + randomPar, (err, entries) => {
+  //Filter data by relevant orgs
+  entries = entries.filter(function(d) { 
+    return vuedata.relevantOrgs.indexOf(d.Organizacija.toLowerCase().trim()) > -1;
+  });
   //Loop through data to aply fixes and calculations
   _.each(entries, function (d) {
     d.Organizacija = d.Organizacija.charAt(0).toUpperCase() + d.Organizacija.slice(1).toLowerCase();
@@ -380,6 +415,17 @@ csv('./data/tab_c/business_limitations.csv?' + randomPar, (err, entries) => {
   var createTable = function() {
     var count=0;
     charts.mainTable.chart = $("#dc-data-table").dataTable({
+      "language": {
+        "info": "Prikazujem _START_ do _END_ od _TOTAL_ vnosov",
+        "lengthMenu": "Prikaži _MENU_ vnosov",
+        "search": "Keresés",
+        "paginate": {
+          "first":      "First",
+          "last":       "Last",
+          "next":       "Naslednja",
+          "previous":   "Prejšnja"
+        }
+      },
       "columnDefs": [
         {
           "searchable": false,
